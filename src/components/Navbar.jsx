@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
+  const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -18,12 +20,26 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Overview', href: '#overview' },
-    { name: 'Ingredients', href: '#ingredients' },
-    { name: 'Interactive Bio-Widget', href: '#stress-dashboard' },
-    { name: 'Drug Profile', href: '#drug-profile' },
-    { name: 'FAQs', href: '#faq' },
+    { name: t('nav.overview'), href: '#overview' },
+    { name: t('nav.ingredients'), href: '#ingredients' },
+    { name: t('nav.stressDashboard'), href: '#stress-dashboard' },
+    { name: t('nav.drugProfile'), href: '#drug-profile' },
+    { name: t('nav.faqs'), href: '#faq' },
   ];
+
+  // Fix mobile navigation when links close menu immediately (vanished DOM reference bug)
+  const handleMobileLinkClick = (e, href) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    
+    // Delay slightly to let the menu collapse animation complete, then scroll smoothly
+    setTimeout(() => {
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 200);
+  };
 
   return (
     <nav
@@ -45,7 +61,7 @@ export default function Navbar() {
                 NEUROLUME
               </span>
               <span className="block text-[9px] uppercase tracking-widest text-sunset font-semibold -mt-1">
-                Herbal Adaptogen
+                {t('hero.premiumTag')}
               </span>
             </div>
           </div>
@@ -54,7 +70,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.href}
                 href={link.href}
                 className="text-slate-300 hover:text-sage text-sm font-medium transition-colors duration-300"
               >
@@ -63,13 +79,37 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Call to Action Button */}
-          <div className="hidden md:block">
+          {/* Language Switcher & Call to Action Button */}
+          <div className="hidden md:flex items-center space-x-6">
+            {/* EN/RU Switcher */}
+            <div className="flex items-center bg-[#051811] border border-sage/20 rounded-xl p-0.5">
+              <button
+                onClick={() => i18n.changeLanguage('en')}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
+                  i18n.language === 'en' || !i18n.language?.startsWith('ru')
+                    ? 'bg-sage text-forest-dark shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => i18n.changeLanguage('ru')}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
+                  i18n.language?.startsWith('ru')
+                    ? 'bg-sage text-forest-dark shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                RU
+              </button>
+            </div>
+
             <a
               href="#drug-profile"
               className="px-5 py-2.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-forest-dark font-bold text-sm shadow-lg shadow-sage/20 hover:shadow-sunset/20 transform hover:-translate-y-0.5 transition-all duration-300"
             >
-              Dosage & Info
+              {t('nav.dosageButton')}
             </a>
           </div>
 
@@ -105,20 +145,48 @@ export default function Navbar() {
             <div className="px-4 pt-2 pb-6 space-y-3">
               {navLinks.map((link) => (
                 <a
-                  key={link.name}
+                  key={link.href}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => handleMobileLinkClick(e, link.href)}
                   className="block text-slate-300 hover:text-sage text-base font-medium py-2 border-b border-white/5 transition-colors"
                 >
                   {link.name}
                 </a>
               ))}
+              
+              {/* Mobile Language Switcher */}
+              <div className="flex items-center justify-between py-2 border-b border-white/5">
+                <span className="text-slate-400 text-sm">Language / Язык</span>
+                <div className="flex bg-[#051811] border border-sage/20 rounded-xl p-0.5">
+                  <button
+                    onClick={() => { i18n.changeLanguage('en'); setIsMobileMenuOpen(false); }}
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                      i18n.language === 'en' || !i18n.language?.startsWith('ru')
+                        ? 'bg-sage text-forest-dark'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <button
+                    onClick={() => { i18n.changeLanguage('ru'); setIsMobileMenuOpen(false); }}
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                      i18n.language?.startsWith('ru')
+                        ? 'bg-sage text-forest-dark'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    RU
+                  </button>
+                </div>
+              </div>
+
               <a
                 href="#drug-profile"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => handleMobileLinkClick(e, '#drug-profile')}
                 className="block text-center mt-4 px-5 py-3 rounded-full bg-gradient-to-r from-sage to-sage-light text-forest-dark font-bold text-sm shadow-md"
               >
-                Dosage & Info
+                {t('nav.dosageButton')}
               </a>
             </div>
           </motion.div>

@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,7 +32,6 @@ export default function Hero() {
         <div className="absolute top-[10%] right-[5%] w-[450px] h-[450px] rounded-full bg-glow-amber opacity-80 filter blur-[80px]" />
         <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] rounded-full bg-glow-sage opacity-70 filter blur-[90px]" />
         
-        {/* Subtle lines or particles can go here */}
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       </div>
 
@@ -50,7 +52,7 @@ export default function Hero() {
             >
               <span className="h-2 w-2 rounded-full bg-sage animate-pulse" />
               <span className="text-xs uppercase tracking-widest font-semibold text-sage-pale font-display">
-                Premium Anxiolytic & Adaptogen
+                {t('hero.premiumTag')}
               </span>
             </motion.div>
 
@@ -60,8 +62,8 @@ export default function Hero() {
               className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-white leading-[1.1]"
               id="hero-title"
             >
-              Restore Inner Peace. <br />
-              Regulate Cortisol with <br />
+              {t('hero.titlePart1')} <br />
+              {t('hero.titlePart2')} <br />
               <span className="amber-glow-text">Neurolume</span>
             </motion.h1>
 
@@ -70,7 +72,7 @@ export default function Hero() {
               variants={itemVariants}
               className="text-lg text-slate-300 max-w-xl font-normal leading-relaxed"
             >
-              Neurolume is a synergistic herbal formula engineered to alleviate chronic stress and nervous tension. By calming the nervous system and regulating the body’s cortisol levels, it promotes mental clarity, emotional balance, and natural relaxation.
+              {t('hero.subtitle')}
             </motion.p>
 
             {/* Core Pill Features */}
@@ -82,25 +84,25 @@ export default function Hero() {
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
                   ✓
                 </div>
-                <span>Cortisol Regulation</span>
+                <span>{t('hero.cortisol')}</span>
               </div>
               <div className="flex items-center space-x-2.5">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
                   ✓
                 </div>
-                <span>5 Botanical Extracts</span>
+                <span>{t('hero.ingredients')}</span>
               </div>
               <div className="flex items-center space-x-2.5">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
                   ✓
                 </div>
-                <span>Serotonin & GABA Balance</span>
+                <span>{t('hero.balance')}</span>
               </div>
               <div className="flex items-center space-x-2.5">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
                   ✓
                 </div>
-                <span>No Prescription Required</span>
+                <span>{t('hero.nonPrescription')}</span>
               </div>
             </motion.div>
 
@@ -113,13 +115,13 @@ export default function Hero() {
                 href="#stress-dashboard"
                 className="px-8 py-3.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-forest-dark font-bold text-base shadow-lg shadow-sage/15 hover:shadow-sunset/15 transform hover:-translate-y-0.5 transition-all duration-300"
               >
-                Assess Your Stress
+                {t('hero.ctaStress')}
               </a>
               <a
                 href="#ingredients"
                 className="px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sage/30 text-white font-semibold text-base transition-all duration-300"
               >
-                Explore Science
+                {t('hero.ctaScience')}
               </a>
             </motion.div>
           </motion.div>
@@ -141,19 +143,19 @@ export default function Hero() {
               
               <img
                 src="/neurolume-package.png"
-                alt="Neurolume Herbal Capsule packaging showing meditation silhouette"
+                alt="Neurolume Herbal Capsule packaging"
                 className="w-full h-auto object-contain rounded-2xl shadow-black/50 shadow-2xl border border-white/10"
                 id="hero-product-image"
               />
 
               {/* Float Tags */}
               <div className="absolute -top-3 -right-3 px-3 py-1.5 rounded-lg bg-sunset text-forest-dark text-xs font-bold shadow-lg transform rotate-6 border border-sunset-pale/30">
-                30 & 60 Capsules
+                {t('hero.capsules')}
               </div>
               <div className="absolute -bottom-4 -left-4 px-3.5 py-2 rounded-xl bg-forest border border-sage/30 shadow-2xl text-slate-100 flex items-center space-x-2">
                 <span className="h-2 w-2 rounded-full bg-sage-light animate-ping" />
                 <span className="text-[11px] font-bold tracking-wider uppercase font-display text-sage-pale">
-                  100% Herbal Formula
+                  {t('hero.herbal')}
                 </span>
               </div>
             </div>

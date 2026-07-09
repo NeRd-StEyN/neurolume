@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('indications');
 
   const tabs = [
-    { id: 'indications', name: 'Indications for Use' },
-    { id: 'dosage', name: 'Dosage & Administration' },
-    { id: 'safety', name: 'Safety & Warnings' },
-    { id: 'packaging', name: 'Packing & Storage' }
+    { id: 'indications', name: t('details.tabs.indications') },
+    { id: 'dosage', name: t('details.tabs.dosage') },
+    { id: 'safety', name: t('details.tabs.safety') },
+    { id: 'packaging', name: t('details.tabs.packaging') }
   ];
 
   return (
@@ -22,14 +24,14 @@ export default function ProductDetails() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs uppercase tracking-widest font-bold text-sage-pale font-display">
-            Technical Monograph
+            {t('details.sectionTag')}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-white">
-            Official Prescribing Information
+            {t('details.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
           <p className="text-slate-300 text-sm">
-            Please read this information carefully before commencing administration. Neurolume is dispensed over-the-counter without a prescription.
+            {t('details.subtitle')}
           </p>
         </div>
 
@@ -65,50 +67,50 @@ export default function ProductDetails() {
               >
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">
-                    Therapeutic Intent & Indications
+                    {t('details.indicationsTitle')}
                   </h3>
                   <p className="text-xs uppercase tracking-widest text-sunset font-semibold">
-                    Pharmacotherapeutic group: Psychotropic, adaptogenic, and anxiolytic
+                    {t('details.indicationsTag')}
                   </p>
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  NEUROLUME is indicated for managing stress, anxiety, and related conditions. The active botanical ingredients work synergistically to reduce emotional volatility, support natural sleep architecture, promote muscular and mental relaxation, and enhance mood by regulating neurotransmitters and cortisol levels.
+                  {t('details.indicationsDesc')}
                 </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5 text-sm text-slate-300">
                   <div className="flex items-start space-x-3 p-4 rounded-xl bg-white/5">
                     <span className="text-xl mt-0.5">🧠</span>
                     <div>
-                      <h4 className="font-bold text-white">Nervous Tension & Anxiety</h4>
+                      <h4 className="font-bold text-white">{t('details.tensionTitle')}</h4>
                       <p className="text-xs text-slate-400 mt-1">
-                        Soothes feelings of dread, panic, and persistent worry.
+                        {t('details.tensionDesc')}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl bg-white/5">
                     <span className="text-xl mt-0.5">😴</span>
                     <div>
-                      <h4 className="font-bold text-white">Stress-Induced Insomnia</h4>
+                      <h4 className="font-bold text-white">{t('details.insomniaTitle')}</h4>
                       <p className="text-xs text-slate-400 mt-1">
-                        Calms racing thoughts at night to allow deep, restorative sleep.
+                        {t('details.insomniaDesc')}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl bg-white/5">
                     <span className="text-xl mt-0.5">🔋</span>
                     <div>
-                      <h4 className="font-bold text-white">Adrenal Fatigue</h4>
+                      <h4 className="font-bold text-white">{t('details.fatigueTitle')}</h4>
                       <p className="text-xs text-slate-400 mt-1">
-                        Relieves chronic fatigue induced by elevated cortisol.
+                        {t('details.fatigueDesc')}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl bg-white/5">
                     <span className="text-xl mt-0.5">🎭</span>
                     <div>
-                      <h4 className="font-bold text-white">Emotional Imbalance</h4>
+                      <h4 className="font-bold text-white">{t('details.imbalanceTitle')}</h4>
                       <p className="text-xs text-slate-400 mt-1">
-                        Stabilizes mood swings, irritability, and stress-related anger.
+                        {t('details.imbalanceDesc')}
                       </p>
                     </div>
                   </div>
@@ -126,42 +128,42 @@ export default function ProductDetails() {
                 className="space-y-6"
               >
                 <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">
-                  Posology & Administration Protocol
+                  {t('details.posologyTitle')}
                 </h3>
                 
                 <div className="p-6 rounded-2xl bg-sage/5 border border-sage/20 grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
                   <div className="space-y-2">
                     <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold font-display">
-                      Standard Dosage
+                      {t('details.tabs.dosage')}
                     </h4>
-                    <p className="text-3xl font-black text-sunset font-display">1 - 2 Capsules</p>
+                    <p className="text-3xl font-black text-sunset font-display">{t('details.posologyDose')}</p>
                     <p className="text-sm text-slate-300">
-                      Take daily with water, or as specifically directed by a healthcare physician.
+                      {t('details.posologyDaily')}
                     </p>
                   </div>
                   
                   <div className="space-y-4 sm:border-l sm:border-white/10 sm:pl-6">
                     <div>
                       <h5 className="text-xs font-bold text-white uppercase tracking-wider">
-                        Preferred Timing
+                        {t('details.timingTitle')}
                       </h5>
                       <p className="text-xs text-slate-400 mt-0.5">
-                        Preferably at night before sleep. This aligns with the body\'s natural circadian repair and maximizes sleep benefits.
+                        {t('details.timingDesc')}
                       </p>
                     </div>
                     <div>
                       <h5 className="text-xs font-bold text-white uppercase tracking-wider">
-                        Method of Administration
+                        {t('details.adminTitle')}
                       </h5>
                       <p className="text-xs text-slate-400 mt-0.5">
-                        Oral administration. Capsules should be swallowed whole with water.
+                        {t('details.adminDesc')}
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-white/5 text-xs text-slate-400">
-                  <strong className="text-slate-300">Pharmacokinetic Note:</strong> Standardized herbal capsules absorb smoothly via the digestive tract. Full metabolic profile data is not available.
+                  <strong className="text-slate-300">{t('details.pkNoteTitle')}</strong> {t('details.pkNoteDesc')}
                 </div>
               </motion.div>
             )}
@@ -176,26 +178,26 @@ export default function ProductDetails() {
                 className="space-y-6"
               >
                 <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">
-                  Safety, Precautions & Contraindications
+                  {t('details.safetyTitle')}
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div className="p-5 rounded-2xl bg-rose-500/5 border border-rose-500/20">
                       <h4 className="text-xs uppercase tracking-widest text-rose-400 font-bold font-display mb-1.5">
-                        Contraindications
+                        {t('details.contraTitle')}
                       </h4>
                       <p className="text-xs text-slate-300 leading-relaxed">
-                        Do not take NEUROLUME if you have a known history of allergies or hypersensitivity to any of its biological active ingredients (Shankhpushpi, Ashwagandha, Tagar, Jayphal, Basant).
+                        {t('details.contraDesc')}
                       </p>
                     </div>
 
                     <div className="p-5 rounded-2xl bg-amber-500/5 border border-amber-500/20">
                       <h4 className="text-xs uppercase tracking-widest text-amber-400 font-bold font-display mb-1.5">
-                        Overdose Symptoms
+                        {t('details.overdoseTitle')}
                       </h4>
                       <p className="text-xs text-slate-300 leading-relaxed">
-                        The formula is extremely well tolerated. In the event of consuming a massive quantity exceeding the recommended dosage, slight symptoms such as dizziness, nausea, or mild stomach irritation may appear.
+                        {t('details.overdoseDesc')}
                       </p>
                     </div>
                   </div>
@@ -203,19 +205,19 @@ export default function ProductDetails() {
                   <div className="space-y-4">
                     <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
                       <h4 className="text-xs uppercase tracking-widest text-slate-300 font-bold font-display mb-1.5">
-                        Undesirable Effects
+                        {t('details.effectsTitle')}
                       </h4>
                       <p className="text-xs text-slate-400 leading-relaxed">
-                        NEUROLUME is fairly safe and well-tolerated. Allergic skin reactions or gastrointestinal adjustments are rare and typically occur only in hypersensitive individuals.
+                        {t('details.effectsDesc')}
                       </p>
                     </div>
 
                     <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
                       <h4 className="text-xs uppercase tracking-widest text-slate-300 font-bold font-display mb-1.5">
-                        Special Warnings & Interactions
+                        {t('details.warningsTitle')}
                       </h4>
                       <p className="text-xs text-slate-400 leading-relaxed">
-                        Consult a healthcare provider before use if you are pregnant, nursing, or have pre-existing medical conditions. Keep the drug strictly out of the reach of children. No drug interaction data is available.
+                        {t('details.warningsDesc')}
                       </p>
                     </div>
                   </div>
@@ -233,38 +235,38 @@ export default function ProductDetails() {
                 className="space-y-6"
               >
                 <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">
-                  Packaging, Storage & Distribution
+                  {t('details.packagingTitle')}
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
                     <span className="text-2xl block mb-2">📦</span>
-                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">Packing Options</h4>
+                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">{t('details.packingTitle')}</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      30 or 60 capsules packed inside an HDPE bottle. Each bottle is housed inside a carton alongside a measuring cup and pack insert.
+                      {t('details.packingDesc')}
                     </p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
                     <span className="text-2xl block mb-2">🌡️</span>
-                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">Storage Conditions</h4>
+                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">{t('details.storageTitle')}</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Store in a dry place, protected from direct light, at a temperature not exceeding 25 °C (77 °F).
+                      {t('details.storageDesc')}
                     </p>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center">
                     <span className="text-2xl block mb-2">⏳</span>
-                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">Shelf Life</h4>
+                    <h4 className="text-xs uppercase font-bold text-slate-300 mb-1 font-display">{t('details.shelfTitle')}</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      3 years (36 months). Do not use after the expiration date printed on the bottle and carton.
+                      {t('details.shelfDesc')}
                     </p>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-sage/5 border border-sage/10 text-xs text-slate-300 flex justify-between items-center">
-                  <span><strong>Dispensing Status:</strong> Without a prescription (OTC).</span>
-                  <span><strong>Formulation:</strong> 100% Phytotherapy / Non-hormonal</span>
+                  <span><strong>{t('details.statusTitle')}</strong> {t('details.statusDesc')}</span>
+                  <span><strong>{t('details.formulationTitle')}</strong> {t('details.formulationDesc')}</span>
                 </div>
               </motion.div>
             )}

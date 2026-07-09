@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function StressDashboard() {
+  const { t } = useTranslation();
   const [stress, setStress] = useState(70);
   const [sleep, setSleep] = useState(40);
   const [fog, setFog] = useState(65);
@@ -13,23 +14,19 @@ export default function StressDashboard() {
   const [serotonin, setSerotonin] = useState(45);
 
   useEffect(() => {
-    // Basic simulation logic
     let calculatedCortisol = Math.round(stress * 0.9 + (100 - sleep) * 0.2);
     let calculatedGaba = Math.round(sleep * 0.7 - stress * 0.3 + 30);
     let calculatedSerotonin = Math.round(sleep * 0.4 - stress * 0.2 - fog * 0.2 + 60);
 
-    // Bound values between 0 and 100
     calculatedCortisol = Math.max(0, Math.min(100, calculatedCortisol));
     calculatedGaba = Math.max(0, Math.min(100, calculatedGaba));
     calculatedSerotonin = Math.max(0, Math.min(100, calculatedSerotonin));
 
     if (tookSupplement) {
-      // Neurolume effect: regulate cortisol (-45%), boost GABA (+40%), boost serotonin (+35%)
       calculatedCortisol = Math.round(calculatedCortisol * 0.55);
       calculatedGaba = Math.round(calculatedGaba + 40);
       calculatedSerotonin = Math.round(calculatedSerotonin + 35);
 
-      // Re-bound
       calculatedCortisol = Math.max(0, Math.min(100, calculatedCortisol));
       calculatedGaba = Math.max(0, Math.min(100, calculatedGaba));
       calculatedSerotonin = Math.max(0, Math.min(100, calculatedSerotonin));
@@ -40,14 +37,12 @@ export default function StressDashboard() {
     setSerotonin(calculatedSerotonin);
   }, [stress, sleep, fog, tookSupplement]);
 
-  // Color helper based on state safety ranges
   const getProgressColor = (val, type) => {
     if (type === 'cortisol') {
       if (val > 65) return 'bg-rose-500 shadow-rose-500/25';
       if (val > 40) return 'bg-amber-500 shadow-amber-500/25';
       return 'bg-emerald-500 shadow-emerald-500/25';
     } else {
-      // GABA or Serotonin (Higher is better)
       if (val < 40) return 'bg-rose-500 shadow-rose-500/25';
       if (val < 65) return 'bg-amber-500 shadow-amber-500/25';
       return 'bg-emerald-500 shadow-emerald-500/25';
@@ -65,14 +60,14 @@ export default function StressDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
-            Interactive Bio-Widget
+            {t('stressWidget.sectionTag')}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-white">
-            Simulate Your Adrenal Stress Response
+            {t('stressWidget.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
           <p className="text-slate-300 text-base">
-            Adjust the sliders to represent your daily lifestyle metrics, then toggle Neurolume to see how the active extracts bring your biochemistry back to homeostasis.
+            {t('stressWidget.subtitle')}
           </p>
         </div>
 
@@ -83,14 +78,14 @@ export default function StressDashboard() {
             <div>
               <h3 className="text-lg font-bold font-display text-white mb-6 flex items-center space-x-2">
                 <span className="h-2 w-2 rounded-full bg-sunset animate-ping" />
-                <span>Adjust Lifestyle Inputs</span>
+                <span>{t('stressWidget.adjustmentsTitle')}</span>
               </h3>
 
               <div className="space-y-6">
                 {/* Stress Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">Mental Stress / Workload</span>
+                    <span className="text-slate-300">{t('stressWidget.stressLabel')}</span>
                     <span className={stress > 65 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{stress}%</span>
                   </div>
                   <input
@@ -103,15 +98,15 @@ export default function StressDashboard() {
                     aria-label="Mental Stress Level"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
-                    <span>Zen Calm</span>
-                    <span>Extreme Panic</span>
+                    <span>{t('stressWidget.stressZen')}</span>
+                    <span>{t('stressWidget.stressPanic')}</span>
                   </div>
                 </div>
 
                 {/* Sleep Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">Sleep Duration & Depth</span>
+                    <span className="text-slate-300">{t('stressWidget.sleepLabel')}</span>
                     <span className={sleep < 45 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{sleep}%</span>
                   </div>
                   <input
@@ -124,15 +119,15 @@ export default function StressDashboard() {
                     aria-label="Sleep Duration and Depth"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
-                    <span>Insomnia</span>
-                    <span>Restorative Sleep</span>
+                    <span>{t('stressWidget.sleepInsomnia')}</span>
+                    <span>{t('stressWidget.sleepRestore')}</span>
                   </div>
                 </div>
 
                 {/* Brain Fog Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">Cognitive Fatigue / Fog</span>
+                    <span className="text-slate-300">{t('stressWidget.fogLabel')}</span>
                     <span className={fog > 65 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{fog}%</span>
                   </div>
                   <input
@@ -145,8 +140,8 @@ export default function StressDashboard() {
                     aria-label="Cognitive Fatigue and Fog"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
-                    <span>High Clarity</span>
-                    <span>Total Exhaustion</span>
+                    <span>{t('stressWidget.fogClarity')}</span>
+                    <span>{t('stressWidget.fogExhaust')}</span>
                   </div>
                 </div>
               </div>
@@ -157,14 +152,13 @@ export default function StressDashboard() {
               <div className="flex items-center justify-between p-4 rounded-2xl bg-sage/5 border border-sage/20 shadow-inner">
                 <div>
                   <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-                    Activate Neurolume
+                    {t('stressWidget.activateTitle')}
                   </h4>
                   <p className="text-[11px] text-slate-400 mt-0.5">
-                    Administer 1-2 capsules (Herbal Stress Relief)
+                    {t('stressWidget.activateDesc')}
                   </p>
                 </div>
                 
-                {/* Custom Toggle Switch */}
                 <button
                   onClick={() => setTookSupplement(!tookSupplement)}
                   className={`w-14 h-8 rounded-full p-1 transition-all duration-300 focus:outline-none ${
@@ -187,13 +181,13 @@ export default function StressDashboard() {
           <div className="lg:col-span-7 flex flex-col justify-between bg-forest/40 border border-sage/10 p-6 sm:p-8 rounded-3xl backdrop-blur-md relative overflow-hidden">
             <div>
               <h3 className="text-lg font-bold font-display text-white mb-6 flex items-center justify-between">
-                <span>Physiological Biomarker Analysis</span>
+                <span>{t('stressWidget.biomarkerTitle')}</span>
                 <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold border ${
                   tookSupplement 
                     ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20 animate-pulse'
+                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
                 }`}>
-                  {tookSupplement ? 'Parasympathetic Active (Calm)' : 'Sympathetic Active (Stressed)'}
+                  {tookSupplement ? t('stressWidget.activeStatus') : t('stressWidget.inactiveStatus')}
                 </span>
               </h3>
 
@@ -202,10 +196,10 @@ export default function StressDashboard() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
                     <span className="text-slate-300 flex items-center space-x-1.5">
-                      <span>Adrenal Cortisol Release</span>
+                      <span>{t('stressWidget.cortisolLabel')}</span>
                       {tookSupplement && (
                         <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                          Ashwagandha Active
+                          {t('stressWidget.cortisolBadge')}
                         </span>
                       )}
                     </span>
@@ -221,7 +215,7 @@ export default function StressDashboard() {
                     />
                   </div>
                   <p className="text-[10px] text-slate-400">
-                    Stress hormone generated by the adrenal glands. Promotes physical fatigue and anxiety. Ideal range: &lt;45%.
+                    {t('stressWidget.cortisolDesc')}
                   </p>
                 </div>
 
@@ -229,10 +223,10 @@ export default function StressDashboard() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
                     <span className="text-slate-300 flex items-center space-x-1.5">
-                      <span>GABA Neural Inhibitor</span>
+                      <span>{t('stressWidget.gabaLabel')}</span>
                       {tookSupplement && (
                         <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                          Tagar Active
+                          {t('stressWidget.gabaBadge')}
                         </span>
                       )}
                     </span>
@@ -248,7 +242,7 @@ export default function StressDashboard() {
                     />
                   </div>
                   <p className="text-[10px] text-slate-400">
-                    Brain neurotransmitter that calms active nerves and controls irritability. Ideal range: &gt;60%.
+                    {t('stressWidget.gabaDesc')}
                   </p>
                 </div>
 
@@ -256,10 +250,10 @@ export default function StressDashboard() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
                     <span className="text-slate-300 flex items-center space-x-1.5">
-                      <span>Serotonin Mood Factor</span>
+                      <span>{t('stressWidget.serotoninLabel')}</span>
                       {tookSupplement && (
                         <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                          Basant Active
+                          {t('stressWidget.serotoninBadge')}
                         </span>
                       )}
                     </span>
@@ -275,7 +269,7 @@ export default function StressDashboard() {
                     />
                   </div>
                   <p className="text-[10px] text-slate-400">
-                    Regulates sleep architecture, happiness levels, and neurological recovery. Ideal range: &gt;60%.
+                    {t('stressWidget.serotoninDesc')}
                   </p>
                 </div>
               </div>
@@ -295,12 +289,12 @@ export default function StressDashboard() {
                   <h4 className={`font-bold font-display uppercase tracking-wider ${
                     tookSupplement ? 'text-emerald-400' : 'text-rose-400'
                   }`}>
-                    {tookSupplement ? 'Neurolume Synergy Active' : 'Unregulated Stress Mode'}
+                    {tookSupplement ? t('stressWidget.activeVerdictTitle') : t('stressWidget.inactiveVerdictTitle')}
                   </h4>
                   <p className="mt-1 leading-relaxed">
                     {tookSupplement 
-                      ? 'The adaptogenic compounds have neutralized high cortisol levels. Ashwagandha buffers stress receptors, Tagar ramps up GABA levels to quiet nervous pathways, and Basant keeps serotonin active. Your body enters a restorative resting mode, easing stress-induced insomnia.'
-                      : 'High workload and low sleep have activated the sympathetic nervous system. Cortisol is elevated, creating physical tension, focus disruption, and sleep struggles. Consider administering 1-2 capsules daily, preferably at night, to recalibrate your bio-indicators.'
+                      ? t('stressWidget.activeVerdictDesc')
+                      : t('stressWidget.inactiveVerdictDesc')
                     }
                   </p>
                 </div>

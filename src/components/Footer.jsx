@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-[#010906] border-t border-sage/10 py-16 relative overflow-hidden z-10 text-slate-400">
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -19,7 +23,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs leading-relaxed max-w-sm">
-              Premium herbal capsules engineered for adaptogenic stress resistance and sleep architectural enhancement. Bringing the synergy of traditional phytotherapy to modern life.
+              {t('footer.desc')}
             </p>
             <p className="text-[10px] text-slate-500">
               © {new Date().getFullYear()} Isshaan Healthcare Pvt Ltd. All rights reserved.
@@ -29,7 +33,7 @@ export default function Footer() {
           {/* Manufacturer Panel */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs uppercase tracking-widest font-bold text-white font-display">
-              Manufactured By
+              {t('footer.manufacturedBy')}
             </h4>
             <div className="text-xs space-y-1">
               <p className="font-bold text-slate-300">Surya Herbal Limited</p>
@@ -42,7 +46,7 @@ export default function Footer() {
           {/* Marketer Panel */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs uppercase tracking-widest font-bold text-white font-display">
-              Marketed By
+              {t('footer.marketedBy')}
             </h4>
             <div className="text-xs space-y-1">
               <p className="font-bold text-slate-300">Isshaan Healthcare Pvt Ltd</p>
@@ -57,19 +61,19 @@ export default function Footer() {
         {/* Legal Disclaimer */}
         <div className="pt-8 border-t border-white/5 space-y-4">
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-[10px] sm:text-xs leading-relaxed text-slate-500">
-            <strong className="text-slate-400">Important Medical Disclaimer:</strong> The information provided on this landing page is for educational and information dissemination purposes only. It is not intended to substitute professional medical advice, diagnosis, or treatment. Neurolume is an herbal supplement formula dispensed without a prescription. Please consult a licensed medical healthcare provider if you are pregnant, nursing, have pre-existing cardiovascular or gastrointestinal conditions, or are taking other prescription medications. Do not exceed the recommended dose. Always keep this and other supplements safely out of the reach of children.
+            <strong className="text-slate-400">{t('footer.disclaimerTitle')}</strong> {t('footer.disclaimer')}
           </div>
           
           <div className="flex flex-wrap justify-between items-center text-[10px] text-slate-600 gap-4">
             <div className="flex space-x-4">
-              <a href="#overview" className="hover:text-sage transition-colors">Privacy Policy</a>
+              <a href="#overview" className="hover:text-sage transition-colors">{t('footer.privacyPolicy')}</a>
               <span>•</span>
-              <a href="#overview" className="hover:text-sage transition-colors">Terms of Service</a>
+              <a href="#overview" className="hover:text-sage transition-colors">{t('footer.termsOfService')}</a>
               <span>•</span>
-              <a href="#overview" className="hover:text-sage transition-colors">Pharmacovigilance Guidelines</a>
+              <a href="#overview" className="hover:text-sage transition-colors">{t('footer.pharmacovigilance')}</a>
             </div>
             <div>
-              Designed with Premium Serene Botanical Theme
+              {t('footer.designedBy')}
             </div>
           </div>
         </div>

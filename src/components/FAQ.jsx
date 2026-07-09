@@ -1,34 +1,18 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function FAQ() {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
-    {
-      question: 'What is Neurolume and how does it relieve stress?',
-      answer: 'Neurolume is a 100% herbal capsule containing a synergistic blend of Shankhpushpi, Ashwagandha, Tagar, Jayphal, and Basant extracts. It belongs to the psychotropic, adaptogenic, and anxiolytic classes. These herbs work together to regulate cortisol, boost GABA and serotonin, calming the nervous system and easing chronic anxiety.'
-    },
-    {
-      question: 'Do I need a doctor\'s prescription to buy Neurolume?',
-      answer: 'No, Neurolume is classified under OTC (Over-the-Counter) dispensing status. You can buy and administer it without a doctor\'s prescription.'
-    },
-    {
-      question: 'When is the best time of day to take Neurolume?',
-      answer: 'The recommended dosage is 1-2 capsules daily, taken orally. It is highly recommended to take it at night. This helps quiet racing thoughts, regulate nocturnal cortisol spikes, and supports deep, restorative sleep.'
-    },
-    {
-      question: 'Are there any side effects or risks of overdose?',
-      answer: 'Neurolume is a natural, non-habit-forming herbal formula that is exceptionally safe and well tolerated. There are no side effects under standard dosage. However, in the event of an extreme overdose, minor symptoms like mild dizziness, nausea, or temporary stomach irritation might appear. Do not take it if you have known allergies to any of the component extracts.'
-    },
-    {
-      question: 'How long does one bottle of Neurolume last, and how should it be stored?',
-      answer: 'Neurolume is available in bottles containing 30 or 60 capsules. Depending on your dose (1 or 2 capsules daily), a bottle will last between 15 to 60 days. Store the bottle in a dry place protected from light, at a temperature below 25 °C. The shelf life is 3 years.'
-    },
-    {
-      question: 'Can I take Neurolume if I am pregnant or breastfeeding?',
-      answer: 'While Neurolume is a safe herbal supplement, it is a standard medical precaution that you consult with a certified healthcare provider before commencing administration if you are pregnant, nursing, or have any pre-existing chronic conditions.'
-    }
+    { question: t('faq.q1'), answer: t('faq.a1') },
+    { question: t('faq.q2'), answer: t('faq.a2') },
+    { question: t('faq.q3'), answer: t('faq.a3') },
+    { question: t('faq.q4'), answer: t('faq.a4') },
+    { question: t('faq.q5'), answer: t('faq.a5') },
+    { question: t('faq.q6'), answer: t('faq.a6') }
   ];
 
   return (
@@ -42,14 +26,14 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
-            Got Questions?
+            {t('faq.sectionTag')}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-white">
-            Frequently Asked Questions
+            {t('faq.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
           <p className="text-slate-300 text-sm">
-            Find immediate answers regarding dosage, safety profile, interactions, and packaging specs below.
+            {t('faq.subtitle')}
           </p>
         </div>
 
