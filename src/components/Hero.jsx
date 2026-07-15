@@ -59,7 +59,7 @@ export default function Hero() {
             {/* Main Page SEO H1 */}
             <motion.h1 
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-slate-900 leading-[1.1]"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight font-display text-slate-900 leading-[1.05]"
               id="hero-title"
             >
               {t('hero.titlePart1')} <br />
