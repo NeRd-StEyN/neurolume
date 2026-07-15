@@ -15,7 +15,6 @@ export default function Ingredients() {
       percentage: t('ingredients.items.shankhpushpi.percentage'),
       benefits: t('ingredients.items.shankhpushpi.benefits', { returnObjects: true }) || [],
       description: t('ingredients.items.shankhpushpi.description'),
-      icon: '🧠',
       color: 'from-emerald-500/20 to-teal-500/20',
       borderColor: 'rgba(16, 185, 129, 0.3)'
     },
@@ -27,7 +26,6 @@ export default function Ingredients() {
       percentage: t('ingredients.items.ashwagandha.percentage'),
       benefits: t('ingredients.items.ashwagandha.benefits', { returnObjects: true }) || [],
       description: t('ingredients.items.ashwagandha.description'),
-      icon: '🌿',
       color: 'from-green-500/20 to-emerald-500/20',
       borderColor: 'rgba(52, 211, 153, 0.3)'
     },
@@ -39,7 +37,6 @@ export default function Ingredients() {
       percentage: t('ingredients.items.tagar.percentage'),
       benefits: t('ingredients.items.tagar.benefits', { returnObjects: true }) || [],
       description: t('ingredients.items.tagar.description'),
-      icon: '🌸',
       color: 'from-teal-500/20 to-sage/20',
       borderColor: 'rgba(20, 184, 166, 0.3)'
     },
@@ -51,7 +48,6 @@ export default function Ingredients() {
       percentage: t('ingredients.items.jayphal.percentage'),
       benefits: t('ingredients.items.jayphal.benefits', { returnObjects: true }) || [],
       description: t('ingredients.items.jayphal.description'),
-      icon: '🌰',
       color: 'from-amber-600/20 to-sunset/20',
       borderColor: 'rgba(245, 158, 11, 0.3)'
     },
@@ -63,7 +59,6 @@ export default function Ingredients() {
       percentage: t('ingredients.items.basant.percentage'),
       benefits: t('ingredients.items.basant.benefits', { returnObjects: true }) || [],
       description: t('ingredients.items.basant.description'),
-      icon: '☀️',
       color: 'from-sunset/20 to-amber-500/20',
       borderColor: 'rgba(251, 191, 36, 0.3)'
     }
@@ -102,8 +97,7 @@ export default function Ingredients() {
               className="wellness-card p-6 cursor-pointer border border-sage/10 hover:border-sunset/35 flex flex-col justify-between h-full group"
             >
               <div>
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-3xl">{item.icon}</span>
+                <div className="flex justify-end items-start mb-4">
                   <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-display">
                     {item.dose}
                   </span>
@@ -161,8 +155,7 @@ export default function Ingredients() {
                   </button>
 
                   <div className="p-8">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <span className="text-5xl">{activeIngredient.icon}</span>
+                    <div className="mb-4">
                       <div>
                         <h3 className="text-2xl font-bold font-display text-slate-900">
                           {activeIngredient.name}

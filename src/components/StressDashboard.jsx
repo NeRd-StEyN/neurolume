@@ -277,8 +277,10 @@ export default function StressDashboard() {
                     ? 'bg-emerald-50/50 border-emerald-100 text-slate-700' 
                     : 'bg-rose-50/50 border-rose-100 text-slate-700'
                 }`}>
-                  <span className="text-lg flex-shrink-0 mt-0.5">
-                    {tookSupplement ? '🌱' : '⚠️'}
+                  <span className={`text-[10px] font-bold tracking-widest uppercase flex-shrink-0 mt-0.5 px-2 py-1 rounded border ${
+                    tookSupplement ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-800 border-rose-200'
+                  }`}>
+                    {tookSupplement ? '✓' : '!'}
                   </span>
                   <div>
                     <h4 className={`font-bold font-display uppercase tracking-wider ${

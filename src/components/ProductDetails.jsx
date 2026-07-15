@@ -99,7 +99,7 @@ export default function ProductDetails() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-200 text-sm text-slate-600">
                   <div className="flex items-start space-x-3 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="text-xl mt-0.5">🧠</span>
+                    <span className="text-xl mt-0.5 text-sage select-none font-bold">•</span>
                     <div>
                       <h4 className="font-bold text-slate-900">{t('details.tensionTitle')}</h4>
                       <p className="text-xs text-slate-500 mt-1">
@@ -108,7 +108,7 @@ export default function ProductDetails() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="text-xl mt-0.5">😴</span>
+                    <span className="text-xl mt-0.5 text-sage select-none font-bold">•</span>
                     <div>
                       <h4 className="font-bold text-slate-900">{t('details.insomniaTitle')}</h4>
                       <p className="text-xs text-slate-500 mt-1">
@@ -117,7 +117,7 @@ export default function ProductDetails() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="text-xl mt-0.5">🔋</span>
+                    <span className="text-xl mt-0.5 text-sage select-none font-bold">•</span>
                     <div>
                       <h4 className="font-bold text-slate-900">{t('details.fatigueTitle')}</h4>
                       <p className="text-xs text-slate-500 mt-1">
@@ -126,7 +126,7 @@ export default function ProductDetails() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="text-xl mt-0.5">🎭</span>
+                    <span className="text-xl mt-0.5 text-sage select-none font-bold">•</span>
                     <div>
                       <h4 className="font-bold text-slate-900">{t('details.imbalanceTitle')}</h4>
                       <p className="text-xs text-slate-500 mt-1">
@@ -260,7 +260,6 @@ export default function ProductDetails() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <span className="text-2xl block mb-2">📦</span>
                     <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.packingTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.packingDesc')}
@@ -268,7 +267,6 @@ export default function ProductDetails() {
                   </div>
 
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <span className="text-2xl block mb-2">🌡️</span>
                     <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.storageTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.storageDesc')}
@@ -276,7 +274,6 @@ export default function ProductDetails() {
                   </div>
 
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <span className="text-2xl block mb-2">⏳</span>
                     <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.shelfTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.shelfDesc')}

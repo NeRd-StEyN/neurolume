@@ -51,9 +51,6 @@ export default function About() {
                 
                 {/* Overlay content */}
                 <div className="relative z-10 text-center space-y-4">
-                  <div className="text-5xl text-sage filter drop-shadow-[0_0_10px_rgba(34,60,48,0.15)]">
-                    ✨
-                  </div>
                   <h3 className="text-xl font-bold font-display text-slate-900 uppercase tracking-wider">
                     {t('about.leafTitle')}
                   </h3>
