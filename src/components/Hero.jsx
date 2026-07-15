@@ -62,8 +62,6 @@ export default function Hero() {
               className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.95] mb-8 text-slate-900"
               id="hero-title"
             >
-              {t('hero.titlePart1')} <br />
-              {t('hero.titlePart2')} <br />
               <span className="amber-glow-text">Neurolume</span>
             </motion.h1>
 
