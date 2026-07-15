@@ -59,7 +59,7 @@ export default function Hero() {
             {/* Main Page SEO H1 */}
             <motion.h1 
               variants={itemVariants}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight font-display text-slate-900 leading-[1.05]"
+              className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.95] mb-8 text-slate-900"
               id="hero-title"
             >
               {t('hero.titlePart1')} <br />
@@ -70,7 +70,7 @@ export default function Hero() {
             {/* Subtitle */}
             <motion.p 
               variants={itemVariants}
-              className="text-lg text-slate-600 max-w-xl font-normal leading-relaxed"
+              className="text-slate-600 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg"
             >
               {t('hero.subtitle')}
             </motion.p>

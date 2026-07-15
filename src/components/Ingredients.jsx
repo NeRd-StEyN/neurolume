@@ -77,7 +77,7 @@ export default function Ingredients() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('ingredients.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
             {t('ingredients.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
@@ -103,7 +103,7 @@ export default function Ingredients() {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-sunset transition-colors duration-300 font-display leading-tight">
+                <h3 className="font-serif text-xl font-semibold text-slate-900 group-hover:text-sunset transition-colors duration-300 leading-tight">
                   {item.name}
                 </h3>
                 <p className="text-xs italic text-sage/80 mt-1 font-sans">
@@ -157,7 +157,7 @@ export default function Ingredients() {
                   <div className="p-8">
                     <div className="mb-4">
                       <div>
-                        <h3 className="text-2xl font-bold font-display text-slate-900">
+                        <h3 className="font-serif text-2xl font-bold text-slate-900">
                           {activeIngredient.name}
                         </h3>
                         <p className="text-sm italic text-sage font-sans">

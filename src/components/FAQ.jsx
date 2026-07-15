@@ -28,7 +28,7 @@ export default function FAQ() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('faq.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
             {t('faq.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
@@ -52,7 +52,7 @@ export default function FAQ() {
                   aria-expanded={isOpen}
                   aria-label={`Toggle answer for: ${faq.question}`}
                 >
-                  <span className="text-sm sm:text-base font-bold font-display text-slate-900 pr-4">
+                  <span className="font-serif text-base sm:text-lg font-bold text-slate-900 pr-4">
                     {faq.question}
                   </span>
                   <span className={`text-xl transform transition-transform duration-300 ${isOpen ? 'rotate-45 text-sunset' : 'text-sage'}`}>

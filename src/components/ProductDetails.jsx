@@ -26,7 +26,7 @@ export default function ProductDetails() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('details.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
             {t('details.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
@@ -41,7 +41,7 @@ export default function ProductDetails() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 relative ${
+              className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 relative ${
                 activeTab === tab.id
                   ? 'text-white bg-gradient-to-r from-sage to-sage-light shadow-lg shadow-sage/10'
                   : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
@@ -86,7 +86,7 @@ export default function ProductDetails() {
                 className="space-y-6"
               >
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-slate-900 font-display uppercase tracking-wide">
+                  <h3 className="font-serif text-xl font-bold text-slate-900 uppercase tracking-wide">
                     {t('details.indicationsTitle')}
                   </h3>
                   <p className="text-xs uppercase tracking-widest text-sunset font-semibold">
@@ -147,7 +147,7 @@ export default function ProductDetails() {
                 transition={{ duration: 0.25 }}
                 className="space-y-6"
               >
-                <h3 className="text-xl font-bold text-slate-900 font-display uppercase tracking-wide">
+                <h3 className="font-serif text-xl font-bold text-slate-900 uppercase tracking-wide">
                   {t('details.posologyTitle')}
                 </h3>
                 
@@ -197,7 +197,7 @@ export default function ProductDetails() {
                 transition={{ duration: 0.25 }}
                 className="space-y-6"
               >
-                <h3 className="text-xl font-bold text-slate-900 font-display uppercase tracking-wide">
+                <h3 className="font-serif text-xl font-bold text-slate-900 uppercase tracking-wide">
                   {t('details.safetyTitle')}
                 </h3>
 
@@ -254,27 +254,27 @@ export default function ProductDetails() {
                 transition={{ duration: 0.25 }}
                 className="space-y-6"
               >
-                <h3 className="text-xl font-bold text-slate-900 font-display uppercase tracking-wide">
+                <h3 className="font-serif text-xl font-bold text-slate-900 uppercase tracking-wide">
                   {t('details.packagingTitle')}
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.packingTitle')}</h4>
+                    <h4 className="font-serif text-lg font-bold text-slate-800 mb-1">{t('details.packingTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.packingDesc')}
                     </p>
                   </div>
 
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.storageTitle')}</h4>
+                    <h4 className="font-serif text-lg font-bold text-slate-800 mb-1">{t('details.storageTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.storageDesc')}
                     </p>
                   </div>
 
                   <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 text-center">
-                    <h4 className="text-xs uppercase font-bold text-slate-800 mb-1 font-display">{t('details.shelfTitle')}</h4>
+                    <h4 className="font-serif text-lg font-bold text-slate-800 mb-1">{t('details.shelfTitle')}</h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {t('details.shelfDesc')}
                     </p>

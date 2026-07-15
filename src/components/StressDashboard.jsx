@@ -62,7 +62,7 @@ export default function StressDashboard() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('stressWidget.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
             {t('stressWidget.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />

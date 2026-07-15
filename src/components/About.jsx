@@ -26,7 +26,7 @@ export default function About() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('about.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
             {t('about.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
@@ -51,7 +51,7 @@ export default function About() {
                 
                 {/* Overlay content */}
                 <div className="relative z-10 text-center space-y-4">
-                  <h3 className="text-xl font-bold font-display text-slate-900 uppercase tracking-wider">
+                  <h3 className="font-serif text-xl font-semibold text-slate-900 mb-5">
                     {t('about.leafTitle')}
                   </h3>
                   <span className="inline-block text-[11px] font-bold tracking-widest text-sunset font-display uppercase">
