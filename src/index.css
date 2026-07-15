@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest-dark: #020705;
-  --color-forest: #051811;
-  --color-moss: #0a291d;
-  --color-moss-light: #123e2d;
-  --color-sage: #10b981;
-  --color-sage-light: #34d399;
-  --color-sage-pale: #a7f3d0;
-  --color-sunset: #f59e0b;
-  --color-sunset-light: #fbbf24;
-  --color-sunset-pale: #fef08a;
+  --color-forest-dark: #fbf6eb;
+  --color-forest: #ffffff;
+  --color-moss: #f3edd8;
+  --color-moss-light: #e6dcb8;
+  --color-sage: #223c30;
+  --color-sage-light: #2c4c3d;
+  --color-sage-pale: #5c7b6c;
+  --color-sunset: #c2410c;
+  --color-sunset-light: #ea580c;
+  --color-sunset-pale: #f97316;
   
   --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -24,7 +24,7 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--color-forest-dark);
-  color: #f1f5f9;
+  color: #1a2421;
   overflow-x: hidden;
 }
 
@@ -46,75 +46,81 @@ body {
   background: var(--color-sunset);
 }
 
-/* Wellness card with glassmorphism and sage-glowing borders */
+/* Wellness card with glassmorphism and sage-glowing borders (light mode) */
 .wellness-card {
-  background: rgba(5, 24, 17, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(34, 60, 48, 0.08);
   border-radius: 24px;
   position: relative;
   overflow: hidden;
   will-change: transform, border-color, box-shadow;
   transform: translate3d(0, 0, 0);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.02),
+    0 1px 3px rgba(0, 0, 0, 0.01);
 }
 
 .wellness-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
   border-radius: inherit;
 }
 
 .wellness-card-hover:hover {
-  border-color: rgba(245, 158, 11, 0.35);
+  border-color: rgba(194, 65, 12, 0.25);
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(245, 158, 11, 0.08);
+    0 16px 40px rgba(34, 60, 48, 0.06),
+    0 0 30px rgba(194, 65, 12, 0.03);
   transform: translate3d(0, -4px, 0);
 }
 
-/* Text Gradients */
+/* Text Gradients (Optimized for Light Mode Contrast) */
 .amber-glow-text {
-  background: linear-gradient(135deg, #ffffff 0%, var(--color-sunset-pale) 50%, var(--color-sunset) 100%);
+  background: linear-gradient(135deg, #1a2421 0%, var(--color-sunset) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .sage-glow-text {
-  background: linear-gradient(135deg, #ffffff 0%, var(--color-sage-pale) 50%, var(--color-sage) 100%);
+  background: linear-gradient(135deg, #1a2421 0%, var(--color-sage) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Custom background layout glows */
+/* Custom background layout glows (Light Mode) */
 .bg-glow-sage {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(34, 60, 48, 0.05) 0%, transparent 60%);
 }
 
 .bg-glow-amber {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(194, 65, 12, 0.04) 0%, transparent 65%);
 }
 
-/* Leaf-like organic mask */
-.leaf-mask {
-  border-radius: 30% 70% 30% 70% / 50% 60% 40% 50%;
+/* Morphing neural orb mask (replacing leaf mask) */
+.leaf-mask, .neural-orb {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(5, 24, 17, 0.9), rgba(18, 62, 45, 0.7));
-  border: 2px solid rgba(16, 185, 129, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 244, 239, 0.75));
+  border: 2px solid rgba(34, 60, 48, 0.15);
   will-change: border-radius;
   transform: translate3d(0, 0, 0);
-  transition: border-radius 1.2s ease-in-out;
+  transition: all 1.2s ease-in-out;
+  animation: orbMorph 8s ease-in-out infinite;
 }
 
-.leaf-mask:hover {
-  border-radius: 70% 30% 70% 30% / 60% 50% 50% 40%;
+@keyframes orbMorph {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 40% 60% 70% 30% / 50% 60% 40% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
 }
 
 /* Core Animations */

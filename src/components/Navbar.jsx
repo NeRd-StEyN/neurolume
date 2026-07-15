@@ -45,7 +45,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#030e0a]/85 backdrop-blur-md border-b border-sage/10 py-3 shadow-lg shadow-black/20'
+          ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 py-3 shadow-md shadow-slate-100'
           : 'bg-transparent py-5'
       }`}
     >
@@ -53,11 +53,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center">
           {/* Logo / Brand */}
           <div className="flex items-center space-x-2">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-sage to-sunset flex items-center justify-center shadow-md shadow-sage/15">
-              <span className="text-forest-dark font-bold text-lg">N</span>
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-sage to-sunset flex items-center justify-center shadow-md shadow-sage/10">
+              <span className="text-white font-bold text-lg">N</span>
             </div>
             <div>
-              <span className="text-xl font-bold tracking-wider font-display bg-gradient-to-r from-white via-sage-pale to-sage bg-clip-text text-transparent">
+              <span className="text-xl font-bold tracking-wider font-display bg-gradient-to-r from-sage to-sunset bg-clip-text text-transparent">
                 NEUROLUME
               </span>
               <span className="block text-[9px] uppercase tracking-widest text-sunset font-semibold -mt-1">
@@ -72,7 +72,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-slate-300 hover:text-sage text-sm font-medium transition-colors duration-300"
+                className="text-slate-700 hover:text-sage text-sm font-semibold transition-colors duration-300"
               >
                 {link.name}
               </a>
@@ -82,13 +82,13 @@ export default function Navbar() {
           {/* Language Switcher & Call to Action Button */}
           <div className="hidden md:flex items-center space-x-6">
             {/* EN/RU Switcher */}
-            <div className="flex items-center bg-[#051811] border border-sage/20 rounded-xl p-0.5">
+            <div className="flex items-center bg-slate-100 border border-slate-200 rounded-xl p-0.5">
               <button
                 onClick={() => i18n.changeLanguage('en')}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
                   i18n.language === 'en' || !i18n.language?.startsWith('ru')
-                    ? 'bg-sage text-forest-dark shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-sage text-white shadow-md'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 EN
@@ -97,8 +97,8 @@ export default function Navbar() {
                 onClick={() => i18n.changeLanguage('ru')}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
                   i18n.language?.startsWith('ru')
-                    ? 'bg-sage text-forest-dark shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-sage text-white shadow-md'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 RU
@@ -107,7 +107,7 @@ export default function Navbar() {
 
             <a
               href="#drug-profile"
-              className="px-5 py-2.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-forest-dark font-bold text-sm shadow-lg shadow-sage/20 hover:shadow-sunset/20 transform hover:-translate-y-0.5 transition-all duration-300"
+              className="px-5 py-2.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-white font-bold text-sm shadow-md shadow-sage/10 transform hover:-translate-y-0.5 transition-all duration-300"
             >
               {t('nav.dosageButton')}
             </a>
@@ -117,7 +117,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-slate-300 hover:text-sage p-2 transition-colors focus:outline-none"
+              className="text-slate-700 hover:text-sage p-2 transition-colors focus:outline-none"
               aria-label="Toggle menu"
             >
               <svg className="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24">
@@ -140,7 +140,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-[#030e0a]/95 border-b border-sage/10 backdrop-blur-lg overflow-hidden"
+            className="md:hidden bg-white/95 border-b border-slate-200 backdrop-blur-lg overflow-hidden"
           >
             <div className="px-4 pt-2 pb-6 space-y-3">
               {navLinks.map((link) => (
@@ -148,22 +148,22 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleMobileLinkClick(e, link.href)}
-                  className="block text-slate-300 hover:text-sage text-base font-medium py-2 border-b border-white/5 transition-colors"
+                  className="block text-slate-700 hover:text-sage text-base font-semibold py-2 border-b border-slate-100 transition-colors"
                 >
                   {link.name}
                 </a>
               ))}
               
               {/* Mobile Language Switcher */}
-              <div className="flex items-center justify-between py-2 border-b border-white/5">
-                <span className="text-slate-400 text-sm">Language / Язык</span>
-                <div className="flex bg-[#051811] border border-sage/20 rounded-xl p-0.5">
+              <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                <span className="text-slate-500 text-sm font-semibold">Language / Язык</span>
+                <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-0.5">
                   <button
                     onClick={() => { i18n.changeLanguage('en'); setIsMobileMenuOpen(false); }}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
                       i18n.language === 'en' || !i18n.language?.startsWith('ru')
-                        ? 'bg-sage text-forest-dark'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-sage text-white'
+                        : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     EN
@@ -172,8 +172,8 @@ export default function Navbar() {
                     onClick={() => { i18n.changeLanguage('ru'); setIsMobileMenuOpen(false); }}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
                       i18n.language?.startsWith('ru')
-                        ? 'bg-sage text-forest-dark'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-sage text-white'
+                        : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     RU
@@ -184,7 +184,7 @@ export default function Navbar() {
               <a
                 href="#drug-profile"
                 onClick={(e) => handleMobileLinkClick(e, '#drug-profile')}
-                className="block text-center mt-4 px-5 py-3 rounded-full bg-gradient-to-r from-sage to-sage-light text-forest-dark font-bold text-sm shadow-md"
+                className="block text-center mt-4 px-5 py-3 rounded-full bg-gradient-to-r from-sage to-sage-light text-white font-bold text-sm shadow-md"
               >
                 {t('nav.dosageButton')}
               </a>

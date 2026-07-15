@@ -32,7 +32,7 @@ export default function Hero() {
         <div className="absolute top-[10%] right-[5%] w-[450px] h-[450px] rounded-full bg-glow-amber opacity-80 filter blur-[80px]" />
         <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] rounded-full bg-glow-sage opacity-70 filter blur-[90px]" />
         
-        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#223c30_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -51,7 +51,7 @@ export default function Hero() {
               className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sage/10 border border-sage/20 shadow-inner"
             >
               <span className="h-2 w-2 rounded-full bg-sage animate-pulse" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-sage-pale font-display">
+              <span className="text-xs uppercase tracking-widest font-semibold text-sage font-display">
                 {t('hero.premiumTag')}
               </span>
             </motion.div>
@@ -59,7 +59,7 @@ export default function Hero() {
             {/* Main Page SEO H1 */}
             <motion.h1 
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-white leading-[1.1]"
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-slate-900 leading-[1.1]"
               id="hero-title"
             >
               {t('hero.titlePart1')} <br />
@@ -70,56 +70,25 @@ export default function Hero() {
             {/* Subtitle */}
             <motion.p 
               variants={itemVariants}
-              className="text-lg text-slate-300 max-w-xl font-normal leading-relaxed"
+              className="text-lg text-slate-600 max-w-xl font-normal leading-relaxed"
             >
               {t('hero.subtitle')}
             </motion.p>
 
-            {/* Core Pill Features */}
-            <motion.div 
-              variants={itemVariants}
-              className="grid grid-cols-2 gap-4 max-w-lg pt-2 text-sm text-slate-200"
-            >
-              <div className="flex items-center space-x-2.5">
-                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
-                  ✓
-                </div>
-                <span>{t('hero.cortisol')}</span>
-              </div>
-              <div className="flex items-center space-x-2.5">
-                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
-                  ✓
-                </div>
-                <span>{t('hero.ingredients')}</span>
-              </div>
-              <div className="flex items-center space-x-2.5">
-                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
-                  ✓
-                </div>
-                <span>{t('hero.balance')}</span>
-              </div>
-              <div className="flex items-center space-x-2.5">
-                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center text-sage">
-                  ✓
-                </div>
-                <span>{t('hero.nonPrescription')}</span>
-              </div>
-            </motion.div>
-
             {/* CTAs */}
             <motion.div 
               variants={itemVariants}
-              className="flex flex-wrap gap-4 pt-4"
+              className="flex flex-wrap gap-4 pt-6"
             >
               <a
                 href="#stress-dashboard"
-                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-forest-dark font-bold text-base shadow-lg shadow-sage/15 hover:shadow-sunset/15 transform hover:-translate-y-0.5 transition-all duration-300"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-white font-bold text-base shadow-lg shadow-sage/10 hover:shadow-sunset/10 transform hover:-translate-y-0.5 transition-all duration-300"
               >
                 {t('hero.ctaStress')}
               </a>
               <a
                 href="#ingredients"
-                className="px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sage/30 text-white font-semibold text-base transition-all duration-300"
+                className="px-8 py-3.5 rounded-full bg-transparent hover:bg-slate-100 border border-slate-300 hover:border-sage text-slate-700 font-semibold text-base transition-all duration-300"
               >
                 {t('hero.ctaScience')}
               </a>
@@ -139,25 +108,14 @@ export default function Hero() {
             {/* The Image Container */}
             <div className="package-float relative z-10 w-full max-w-[340px] sm:max-w-[380px]">
               {/* Premium Floating Ring Frame */}
-              <div className="absolute -inset-4 rounded-3xl border border-sage/20 bg-gradient-to-b from-sage/5 to-transparent backdrop-blur-[2px] -z-10 shadow-2xl" />
+              <div className="absolute -inset-4 rounded-3xl border border-sage/10 bg-gradient-to-b from-sage/5 to-transparent backdrop-blur-[2px] -z-10 shadow-xl shadow-slate-100" />
               
               <img
                 src="/neurolume-package.png"
                 alt="Neurolume Herbal Capsule packaging"
-                className="w-full h-auto object-contain rounded-2xl shadow-black/50 shadow-2xl border border-white/10"
+                className="w-full h-auto object-contain rounded-2xl shadow-slate-300/30 shadow-2xl border border-slate-200"
                 id="hero-product-image"
               />
-
-              {/* Float Tags */}
-              <div className="absolute -top-3 -right-3 px-3 py-1.5 rounded-lg bg-sunset text-forest-dark text-xs font-bold shadow-lg transform rotate-6 border border-sunset-pale/30">
-                {t('hero.capsules')}
-              </div>
-              <div className="absolute -bottom-4 -left-4 px-3.5 py-2 rounded-xl bg-forest border border-sage/30 shadow-2xl text-slate-100 flex items-center space-x-2">
-                <span className="h-2 w-2 rounded-full bg-sage-light animate-ping" />
-                <span className="text-[11px] font-bold tracking-wider uppercase font-display text-sage-pale">
-                  {t('hero.herbal')}
-                </span>
-              </div>
             </div>
           </motion.div>
 

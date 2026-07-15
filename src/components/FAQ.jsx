@@ -16,7 +16,7 @@ export default function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden bg-forest-dark border-t border-sage/5">
+    <section id="faq" className="py-24 relative overflow-hidden bg-moss/20 border-t border-slate-200">
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-glow-sage opacity-25 filter blur-[95px]" />
@@ -28,11 +28,11 @@ export default function FAQ() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('faq.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
             {t('faq.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
-          <p className="text-slate-300 text-sm">
+          <p className="text-slate-600 text-sm">
             {t('faq.subtitle')}
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className="wellness-card border-sage/10 hover:border-sage/20 transition-all duration-300"
+                className="wellness-card border border-slate-200 hover:border-sage/20 transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
@@ -52,7 +52,7 @@ export default function FAQ() {
                   aria-expanded={isOpen}
                   aria-label={`Toggle answer for: ${faq.question}`}
                 >
-                  <span className="text-sm sm:text-base font-bold font-display text-white pr-4">
+                  <span className="text-sm sm:text-base font-bold font-display text-slate-900 pr-4">
                     {faq.question}
                   </span>
                   <span className={`text-xl transform transition-transform duration-300 ${isOpen ? 'rotate-45 text-sunset' : 'text-sage'}`}>
@@ -69,7 +69,7 @@ export default function FAQ() {
                       transition={{ duration: 0.25, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 pt-1 text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-white/5">
+                      <div className="px-6 pb-6 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-200">
                         {faq.answer}
                       </div>
                     </motion.div>

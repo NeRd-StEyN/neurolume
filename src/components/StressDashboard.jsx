@@ -50,7 +50,7 @@ export default function StressDashboard() {
   };
 
   return (
-    <section id="stress-dashboard" className="py-24 relative overflow-hidden bg-forest/10 border-y border-sage/5">
+    <section id="stress-dashboard" className="py-24 relative overflow-hidden bg-moss/20 border-y border-slate-200">
       {/* Ambient backgrounds */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[30%] left-[5%] w-[450px] h-[450px] bg-glow-sage opacity-30 filter blur-[95px]" />
@@ -62,22 +62,49 @@ export default function StressDashboard() {
           <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
             {t('stressWidget.sectionTag')}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-slate-900">
             {t('stressWidget.title')}
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
-          <p className="text-slate-300 text-base">
+          <p className="text-slate-600 text-base">
             {t('stressWidget.subtitle')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* Unified Glass Container */}
+        <div className="wellness-card p-6 sm:p-10 border border-slate-200 backdrop-blur-lg">
           
-          {/* Left Column: Sliders Controls */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-6 bg-forest/40 border border-sage/10 p-6 sm:p-8 rounded-3xl backdrop-blur-md">
-            <div>
-              <h3 className="text-lg font-bold font-display text-white mb-6 flex items-center space-x-2">
-                <span className="h-2 w-2 rounded-full bg-sunset animate-ping" />
+          {/* Header switch to activate supplement - sleek and centered */}
+          <div className="flex flex-col sm:flex-row items-center justify-between p-5 rounded-2xl bg-sage/5 border border-sage/10 mb-10 max-w-2xl mx-auto">
+            <div className="text-center sm:text-left mb-4 sm:mb-0">
+              <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider font-display">
+                {t('stressWidget.activateTitle')}
+              </h4>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                {t('stressWidget.activateDesc')}
+              </p>
+            </div>
+            
+            <button
+              onClick={() => setTookSupplement(!tookSupplement)}
+              className={`w-14 h-8 rounded-full p-1 transition-all duration-300 focus:outline-none flex-shrink-0 cursor-pointer border ${
+                tookSupplement ? 'bg-sage border-sage-light' : 'bg-slate-200 border-slate-300'
+              }`}
+              aria-label="Toggle Neurolume supplement administration status"
+            >
+              <div
+                className={`h-5 w-5 rounded-full bg-white transition-all duration-300 shadow-md transform ${
+                  tookSupplement ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            {/* Left Column: Sliders Controls */}
+            <div className="lg:col-span-5 space-y-8">
+              <h3 className="text-base font-bold font-display text-slate-900 uppercase tracking-wider flex items-center space-x-2 border-b border-slate-200 pb-3">
+                <span className="h-2 w-2 rounded-full bg-sunset animate-pulse" />
                 <span>{t('stressWidget.adjustmentsTitle')}</span>
               </h3>
 
@@ -85,8 +112,8 @@ export default function StressDashboard() {
                 {/* Stress Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">{t('stressWidget.stressLabel')}</span>
-                    <span className={stress > 65 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{stress}%</span>
+                    <span className="text-slate-700">{t('stressWidget.stressLabel')}</span>
+                    <span className={stress > 65 ? 'text-rose-600 font-bold' : 'text-slate-500'}>{stress}%</span>
                   </div>
                   <input
                     type="range"
@@ -94,7 +121,7 @@ export default function StressDashboard() {
                     max="100"
                     value={stress}
                     onChange={(e) => setStress(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sage"
+                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sage"
                     aria-label="Mental Stress Level"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
@@ -106,8 +133,8 @@ export default function StressDashboard() {
                 {/* Sleep Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">{t('stressWidget.sleepLabel')}</span>
-                    <span className={sleep < 45 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{sleep}%</span>
+                    <span className="text-slate-700">{t('stressWidget.sleepLabel')}</span>
+                    <span className={sleep < 45 ? 'text-rose-600 font-bold' : 'text-slate-500'}>{sleep}%</span>
                   </div>
                   <input
                     type="range"
@@ -115,7 +142,7 @@ export default function StressDashboard() {
                     max="100"
                     value={sleep}
                     onChange={(e) => setSleep(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sage"
+                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sage"
                     aria-label="Sleep Duration and Depth"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
@@ -127,8 +154,8 @@ export default function StressDashboard() {
                 {/* Brain Fog Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300">{t('stressWidget.fogLabel')}</span>
-                    <span className={fog > 65 ? 'text-rose-400 font-bold' : 'text-slate-400'}>{fog}%</span>
+                    <span className="text-slate-700">{t('stressWidget.fogLabel')}</span>
+                    <span className={fog > 65 ? 'text-rose-600 font-bold' : 'text-slate-500'}>{fog}%</span>
                   </div>
                   <input
                     type="range"
@@ -136,7 +163,7 @@ export default function StressDashboard() {
                     max="100"
                     value={fog}
                     onChange={(e) => setFog(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sage"
+                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sage"
                     aria-label="Cognitive Fatigue and Fog"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500">
@@ -147,45 +174,14 @@ export default function StressDashboard() {
               </div>
             </div>
 
-            {/* Neurolume Switch Card */}
-            <div className="pt-6 mt-6 border-t border-white/5 space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-sage/5 border border-sage/20 shadow-inner">
-                <div>
-                  <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-                    {t('stressWidget.activateTitle')}
-                  </h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    {t('stressWidget.activateDesc')}
-                  </p>
-                </div>
-                
-                <button
-                  onClick={() => setTookSupplement(!tookSupplement)}
-                  className={`w-14 h-8 rounded-full p-1 transition-all duration-300 focus:outline-none ${
-                    tookSupplement ? 'bg-sage border border-sage-light' : 'bg-slate-800 border border-slate-700'
-                  }`}
-                  aria-label="Toggle Neurolume supplement administration status"
-                >
-                  <div
-                    className={`h-5 w-5 rounded-full bg-forest-dark transition-all duration-300 shadow-md transform ${
-                      tookSupplement ? 'translate-x-6 bg-slate-900' : 'translate-x-0 bg-slate-400'
-                    }`}
-                  />
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Physiological Output Indicators */}
-          <div className="lg:col-span-7 flex flex-col justify-between bg-forest/40 border border-sage/10 p-6 sm:p-8 rounded-3xl backdrop-blur-md relative overflow-hidden">
-            <div>
-              <h3 className="text-lg font-bold font-display text-white mb-6 flex items-center justify-between">
+            {/* Right Column: Physiological Output Indicators */}
+            <div className="lg:col-span-7 space-y-8">
+              <h3 className="text-base font-bold font-display text-slate-900 uppercase tracking-wider flex items-center justify-between border-b border-slate-200 pb-3">
                 <span>{t('stressWidget.biomarkerTitle')}</span>
-                <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold border ${
+                <span className={`text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold border ${
                   tookSupplement 
-                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+                    : 'bg-rose-50 text-rose-800 border-rose-200'
                 }`}>
                   {tookSupplement ? t('stressWidget.activeStatus') : t('stressWidget.inactiveStatus')}
                 </span>
@@ -195,17 +191,17 @@ export default function StressDashboard() {
                 {/* Cortisol Indicator */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300 flex items-center space-x-1.5">
+                    <span className="text-slate-700 flex items-center space-x-1.5">
                       <span>{t('stressWidget.cortisolLabel')}</span>
                       {tookSupplement && (
-                        <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-100 font-bold font-display uppercase tracking-widest px-1.5 py-0.5 rounded">
                           {t('stressWidget.cortisolBadge')}
                         </span>
                       )}
                     </span>
-                    <span className="font-bold text-sm text-slate-200">{cortisol}%</span>
+                    <span className="font-bold text-sm text-slate-900">{cortisol}%</span>
                   </div>
-                  <div className="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden p-0.5 border border-slate-200">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ease-out shadow ${getProgressColor(
                         cortisol,
@@ -214,7 +210,7 @@ export default function StressDashboard() {
                       style={{ width: `${cortisol}%` }}
                     />
                   </div>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-600">
                     {t('stressWidget.cortisolDesc')}
                   </p>
                 </div>
@@ -222,17 +218,17 @@ export default function StressDashboard() {
                 {/* GABA Calming Index */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300 flex items-center space-x-1.5">
+                    <span className="text-slate-700 flex items-center space-x-1.5">
                       <span>{t('stressWidget.gabaLabel')}</span>
                       {tookSupplement && (
-                        <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-100 font-bold font-display uppercase tracking-widest px-1.5 py-0.5 rounded">
                           {t('stressWidget.gabaBadge')}
                         </span>
                       )}
                     </span>
-                    <span className="font-bold text-sm text-slate-200">{gaba}%</span>
+                    <span className="font-bold text-sm text-slate-900">{gaba}%</span>
                   </div>
-                  <div className="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden p-0.5 border border-slate-200">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ease-out shadow ${getProgressColor(
                         gaba,
@@ -241,7 +237,7 @@ export default function StressDashboard() {
                       style={{ width: `${gaba}%` }}
                     />
                   </div>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-600">
                     {t('stressWidget.gabaDesc')}
                   </p>
                 </div>
@@ -249,17 +245,17 @@ export default function StressDashboard() {
                 {/* Serotonin Mood Factor */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
-                    <span className="text-slate-300 flex items-center space-x-1.5">
+                    <span className="text-slate-700 flex items-center space-x-1.5">
                       <span>{t('stressWidget.serotoninLabel')}</span>
                       {tookSupplement && (
-                        <span className="text-[10px] text-emerald-400 font-bold font-display uppercase tracking-widest bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-100 font-bold font-display uppercase tracking-widest px-1.5 py-0.5 rounded">
                           {t('stressWidget.serotoninBadge')}
                         </span>
                       )}
                     </span>
-                    <span className="font-bold text-sm text-slate-200">{serotonin}%</span>
+                    <span className="font-bold text-sm text-slate-900">{serotonin}%</span>
                   </div>
-                  <div className="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden p-0.5 border border-slate-200">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ease-out shadow ${getProgressColor(
                         serotonin,
@@ -268,41 +264,39 @@ export default function StressDashboard() {
                       style={{ width: `${serotonin}%` }}
                     />
                   </div>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-600">
                     {t('stressWidget.serotoninDesc')}
                   </p>
                 </div>
               </div>
-            </div>
 
-            {/* Verdict Box */}
-            <div className="mt-8 pt-6 border-t border-white/5 text-xs">
-              <div className={`p-4 rounded-2xl flex items-start space-x-3 transition-colors duration-500 ${
-                tookSupplement 
-                  ? 'bg-emerald-500/5 border border-emerald-500/15 text-slate-300' 
-                  : 'bg-rose-500/5 border border-rose-500/15 text-slate-300'
-              }`}>
-                <span className="text-lg flex-shrink-0 mt-0.5">
-                  {tookSupplement ? '🌱' : '⚠️'}
-                </span>
-                <div>
-                  <h4 className={`font-bold font-display uppercase tracking-wider ${
-                    tookSupplement ? 'text-emerald-400' : 'text-rose-400'
-                  }`}>
-                    {tookSupplement ? t('stressWidget.activeVerdictTitle') : t('stressWidget.inactiveVerdictTitle')}
-                  </h4>
-                  <p className="mt-1 leading-relaxed">
-                    {tookSupplement 
-                      ? t('stressWidget.activeVerdictDesc')
-                      : t('stressWidget.inactiveVerdictDesc')
-                    }
-                  </p>
+              {/* Verdict Box */}
+              <div className="pt-6 border-t border-slate-200 text-xs">
+                <div className={`p-4 rounded-2xl flex items-start space-x-3 transition-colors duration-500 border ${
+                  tookSupplement 
+                    ? 'bg-emerald-50/50 border-emerald-100 text-slate-700' 
+                    : 'bg-rose-50/50 border-rose-100 text-slate-700'
+                }`}>
+                  <span className="text-lg flex-shrink-0 mt-0.5">
+                    {tookSupplement ? '🌱' : '⚠️'}
+                  </span>
+                  <div>
+                    <h4 className={`font-bold font-display uppercase tracking-wider ${
+                      tookSupplement ? 'text-emerald-800' : 'text-rose-800'
+                    }`}>
+                      {tookSupplement ? t('stressWidget.activeVerdictTitle') : t('stressWidget.inactiveVerdictTitle')}
+                    </h4>
+                    <p className="mt-1 leading-relaxed">
+                      {tookSupplement 
+                        ? t('stressWidget.activeVerdictDesc')
+                        : t('stressWidget.inactiveVerdictDesc')
+                      }
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
     </section>

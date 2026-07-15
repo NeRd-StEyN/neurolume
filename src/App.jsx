@@ -9,8 +9,8 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="bg-[#020705] min-h-screen text-slate-100 relative selection:bg-sage selection:text-forest-dark overflow-x-hidden">
-      {/* Background ambient particles (Botanical Nutrients) */}
+    <div className="bg-[#fbf6eb] min-h-screen text-[#1a2421] relative selection:bg-sage selection:text-white overflow-x-hidden">
+      {/* Background ambient particles (Amethyst/Rose Gold nutrients) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {/* We can construct 4 dynamic particle glows drifting slowly */}
         <div className="absolute top-[15%] left-[25%] w-1.5 h-1.5 rounded-full bg-sage-light opacity-30 particle" style={{ '--x-offset': '45px', animationDelay: '0s', animationDuration: '14s' }} />
