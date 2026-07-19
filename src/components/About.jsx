@@ -1,136 +1,218 @@
-import { motion } from 'framer-motion';
+import { useRef, useState, useCallback } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+
+function TiltCard3D({ children, className = '' }) {
+  const cardRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 25 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 25 });
+  const glowX = useSpring(useTransform(mouseX, [-0.5, 0.5], [0, 100]), { stiffness: 200, damping: 25 });
+  const glowY = useSpring(useTransform(mouseY, [-0.5, 0.5], [0, 100]), { stiffness: 200, damping: 25 });
+
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  }, [mouseX, mouseY]);
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+  }, [mouseX, mouseY]);
+
+  return (
+    <div style={{ perspective: '1000px' }}>
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className={className}
+      >
+        {/* Dynamic light glow following mouse */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none rounded-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: useTransform(
+              [glowX, glowY],
+              ([x, y]) => `radial-gradient(circle at ${x}% ${y}%, rgba(249,115,22,0.08) 0%, transparent 60%)`
+            ),
+          }}
+        />
+        {children}
+      </motion.div>
+    </div>
+  );
+}
 
 export default function About() {
   const { t } = useTranslation();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: 'spring', stiffness: 50, damping: 15 }
-    }
-  };
+  const features = [
+    {
+      icon: (
+        <svg viewBox="0 0 40 40" className="w-10 h-10" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <path d="M15 20 Q20 10 25 20 Q20 15 15 20Z" fill="currentColor" opacity="0.6" />
+          <path d="M20 12 L20 28 M14 20 L26 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
+      title: t('about.leafTitle'),
+      desc: t('about.leafDesc'),
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 40 40" className="w-10 h-10" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <path d="M12 28 L16 18 L20 24 L24 14 L28 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
+      title: t('about.tradeName'),
+      desc: t('about.tradeNameDesc'),
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 40 40" className="w-10 h-10" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <path d="M20 12 C20 12 12 18 12 24 C12 28 16 30 20 28 C24 30 28 28 28 24 C28 18 20 12 20 12Z" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1" />
+        </svg>
+      ),
+      title: t('about.dosageForm'),
+      desc: t('about.dosageFormDesc'),
+    },
+  ];
 
   return (
-    <section id="overview" className="py-24 relative overflow-hidden bg-moss/20">
-      {/* Background elements */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-glow-sage opacity-50 filter blur-[80px]" />
-        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-glow-amber opacity-40 filter blur-[70px]" />
-      </div>
+    <section id="about" className="relative py-40 lg:py-48 overflow-hidden" ref={ref}>
+      {/* Background decorations */}
+      <div className="absolute top-0 left-0 right-0 section-divider" />
+      <div className="absolute top-1/3 right-0 w-72 h-72 bg-gold/3 rounded-full blur-[120px]" />
+      <motion.div
+        animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/4 left-10 w-48 h-48 bg-emerald/3 rounded-full blur-[100px]"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
-            {t('about.sectionTag')}
-          </span>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
-            {t('about.title')}
-          </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
-          <p className="text-slate-600 text-base leading-relaxed">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-24 lg:mb-28">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+            <span className="text-gold text-xs tracking-[0.3em] uppercase">{t('about.sectionTag')}</span>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-8"
+          >
+            <span className="text-white">{t('about.title')}</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-gray-light text-lg max-w-2xl mx-auto leading-relaxed"
+          >
             {t('about.subtitle')}
-          </p>
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Organic Leaf Mask and Visual Summary */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={cardVariants}
-            className="lg:col-span-5 flex justify-center"
-          >
-            <div className="relative w-full max-w-[320px]">
-              {/* Morphing Neural Orb container */}
-              <div className="neural-orb aspect-square w-full flex items-center justify-center p-8 relative shadow-2xl">
-                <div className="absolute inset-0 bg-[#d2dfd8]/65 mix-blend-multiply" />
-                
-                {/* Overlay content */}
-                <div className="relative z-10 text-center space-y-4">
-                  <h3 className="font-serif text-xl font-semibold text-slate-900 mb-5">
-                    {t('about.leafTitle')}
-                  </h3>
-                  <span className="inline-block text-[11px] font-bold tracking-widest text-sunset font-display uppercase">
-                    Neuro-Regulation
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Detailed Product Mode of Action */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={cardVariants}
-            className="lg:col-span-7 space-y-8"
-          >
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold font-display text-slate-900 flex items-center space-x-3">
-                <span className="h-6 w-1 bg-sunset rounded-full" />
-                <span>{t('about.modeOfActionTitle')}</span>
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                {t('about.modeOfActionDesc')}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-slate-200">
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2.5">
-                  <div className="h-6 w-6 rounded-full bg-sage/10 text-sage flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    1
-                  </div>
-                  <h4 className="text-sm font-bold text-slate-900">{t('about.point1Title')}</h4>
-                </div>
-                <p className="text-xs text-slate-600 pl-8.5 leading-relaxed">
-                  {t('about.point1Desc')}
+        {/* 3D Features Grid */}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+          {features.map((feature, i) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 50, rotateX: -10 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 + i * 0.2 }}
+            >
+              <TiltCard3D className="glass-card glass-card-hover p-10 lg:p-12 text-center group cursor-default h-full">
+                <motion.div
+                  whileHover={{ scale: 1.15, rotate: 5, y: -5 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                  className="text-gold mb-8 flex justify-center"
+                  style={{ transform: 'translateZ(30px)' }}
+                >
+                  {feature.icon}
+                </motion.div>
+                <h3
+                  className="font-serif text-xl font-semibold text-white mb-5 group-hover:text-gold-light transition-colors duration-300"
+                  style={{ transform: 'translateZ(20px)' }}
+                >
+                  {feature.title}
+                </h3>
+                <p
+                  className="text-gray text-sm leading-relaxed"
+                  style={{ transform: 'translateZ(10px)' }}
+                >
+                  {feature.desc}
                 </p>
-              </div>
 
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2.5">
-                  <div className="h-6 w-6 rounded-full bg-sage/10 text-sage flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    2
-                  </div>
-                  <h4 className="text-sm font-bold text-slate-900">{t('about.point2Title')}</h4>
-                </div>
-                <p className="text-xs text-slate-600 pl-8.5 leading-relaxed">
-                  {t('about.point2Desc')}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2.5">
-                  <div className="h-6 w-6 rounded-full bg-sage/10 text-sage flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    3
-                  </div>
-                  <h4 className="text-sm font-bold text-slate-900">{t('about.point3Title')}</h4>
-                </div>
-                <p className="text-xs text-slate-600 pl-8.5 leading-relaxed">
-                  {t('about.point3Desc')}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2.5">
-                  <div className="h-6 w-6 rounded-full bg-sage/10 text-sage flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    4
-                  </div>
-                  <h4 className="text-sm font-bold text-slate-900">{t('about.point4Title')}</h4>
-                </div>
-                <p className="text-xs text-slate-600 pl-8.5 leading-relaxed">
-                  {t('about.point4Desc')}
-                </p>
-              </div>
-            </div>
-          </motion.div>
+                {/* Bottom glow line */}
+                <motion.div
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent group-hover:w-3/4 transition-all duration-700"
+                />
+              </TiltCard3D>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Stats Bar with 3D depth */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-24 lg:mt-28 glass-card-3d p-10 lg:p-12 grid grid-cols-2 md:grid-cols-4 gap-10"
+          style={{ perspective: '800px' }}
+        >
+          {[
+            { value: '5', label: t('hero.ingredients') || 'Botanical Extracts' },
+            { value: '0', label: t('about.noAdditives') },
+            { value: '1-2', label: 'Capsules / Day' },
+            { value: '100%', label: 'Herbal Formula' },
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              className="text-center"
+              whileHover={{ scale: 1.05, y: -4 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+              <motion.div
+                initial={{ scale: 0, rotateY: -90 }}
+                animate={isInView ? { scale: 1, rotateY: 0 } : {}}
+                transition={{ delay: 1 + i * 0.15, type: 'spring', stiffness: 200 }}
+                className="text-3xl lg:text-5xl font-serif font-bold gold-text mb-3"
+              >
+                {stat.value}
+              </motion.div>
+              <p className="text-gray text-xs tracking-wider uppercase">{stat.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

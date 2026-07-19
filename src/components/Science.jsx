@@ -1,0 +1,264 @@
+import { useRef, useCallback } from 'react';
+import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
+export default function Science() {
+  const { t } = useTranslation();
+  const sectionRef = useRef(null);
+  const timelineRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+
+  const steps = [
+    {
+      number: '01',
+      title: t('about.point1Title'),
+      subtitle: 'Cortisol',
+      description: t('about.point1Desc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8 text-gold" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+    },
+    {
+      number: '02',
+      title: t('about.point2Title'),
+      subtitle: 'GABA',
+      description: t('about.point2Desc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8 text-gold" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9 9 0 009-9c0-5-9-10-9-10S3 7 3 12a9 9 0 009 9z" />
+        </svg>
+      ),
+    },
+    {
+      number: '03',
+      title: t('about.point3Title'),
+      subtitle: 'Serotonin',
+      description: t('about.point3Desc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8 text-gold" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      ),
+    },
+    {
+      number: '04',
+      title: t('about.point4Title'),
+      subtitle: 'Neuroprotection',
+      description: t('about.point4Desc'),
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-8 h-8 text-gold" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+      ),
+    },
+  ];
+
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start center', 'end center'],
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+
+  return (
+    <section id="science" className="relative py-40 lg:py-48 overflow-hidden" ref={sectionRef}>
+      {/* Background */}
+      <div className="absolute top-0 left-0 right-0 section-divider" />
+      <motion.div
+        animate={{ y: [0, -40, 0], x: [0, 15, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/4 left-0 w-80 h-80 bg-emerald/5 rounded-full blur-[150px]"
+      />
+      <motion.div
+        animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+        className="absolute bottom-1/4 right-0 w-96 h-96 bg-gold/3 rounded-full blur-[150px]"
+      />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-28 lg:mb-32">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+            <span className="text-gold text-xs tracking-[0.3em] uppercase">{t('nav.stressDashboard')}</span>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-8"
+          >
+            <span className="text-white">{t('about.modeOfActionTitle')}</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-gray-light text-lg max-w-2xl mx-auto leading-relaxed"
+          >
+            {t('about.modeOfActionDesc')}
+          </motion.p>
+        </div>
+
+        {/* Timeline */}
+        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
+          {/* Timeline Track */}
+          <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px]">
+            {/* Background line */}
+            <div className="absolute inset-0 bg-gold/10 rounded-full" />
+            {/* Animated progress line */}
+            <motion.div
+              style={{ height: lineHeight }}
+              className="absolute top-0 left-0 right-0 bg-gold rounded-full timeline-line-glow"
+            />
+          </div>
+
+          {/* Steps */}
+          <div className="space-y-32">
+            {steps.map((step, i) => (
+              <TimelineStep key={step.number} step={step} index={i} isEven={i % 2 === 0} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TimelineStep({ step, index, isEven }) {
+  const ref = useRef(null);
+  const cardRef = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  // Mouse-tracking 3D tilt
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 25 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 25 });
+
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  }, [mouseX, mouseY]);
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+  }, [mouseX, mouseY]);
+
+  return (
+    <div
+      ref={ref}
+      className={`relative flex items-center ${
+        isEven ? 'md:flex-row' : 'md:flex-row-reverse'
+      } flex-row`}
+    >
+      {/* Timeline Dot with 3D pulse */}
+      <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-10">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={isInView ? { scale: 1 } : {}}
+          transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+          className="w-4 h-4 rounded-full bg-gold shadow-[0_0_15px_rgba(249,115,22,0.5)] relative"
+        >
+          {isInView && (
+            <>
+              <div className="absolute inset-0 rounded-full bg-gold animate-ping opacity-30" />
+              <motion.div
+                animate={{ scale: [1, 2.5, 1], opacity: [0.3, 0, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+                className="absolute inset-0 rounded-full border border-gold/40"
+              />
+            </>
+          )}
+        </motion.div>
+      </div>
+
+      {/* 3D Content Card */}
+      <motion.div
+        initial={{ opacity: 0, x: isEven ? -60 : 60, rotateY: isEven ? -10 : 10 }}
+        animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${
+          isEven ? 'md:pr-0' : 'md:pl-0'
+        } ${isEven ? '' : 'md:ml-auto'}`}
+        style={{ perspective: '1000px' }}
+      >
+        <motion.div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+          className="glass-card glass-card-hover p-10 lg:p-12 group"
+        >
+          {/* Step number + Icon */}
+          <div className="flex items-center justify-between mb-6" style={{ transform: 'translateZ(20px)' }}>
+            <motion.span
+              className="text-gold/30 font-serif text-4xl font-bold"
+              whileHover={{ scale: 1.2, color: 'rgba(249,115,22,0.5)' }}
+            >
+              {step.number}
+            </motion.span>
+            <motion.span
+              className="text-3xl"
+              animate={isInView ? { rotate: [0, 10, -10, 0] } : {}}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              style={{ transform: 'translateZ(30px)' }}
+            >
+              {step.icon}
+            </motion.span>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-gold text-xs tracking-[0.2em] uppercase mb-3" style={{ transform: 'translateZ(15px)' }}>
+            {step.subtitle}
+          </p>
+
+          {/* Title */}
+          <h3
+            className="font-serif text-2xl font-bold text-white mb-5 group-hover:text-gold-light transition-colors duration-300"
+            style={{ transform: 'translateZ(20px)' }}
+          >
+            {step.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-gray text-sm leading-relaxed" style={{ transform: 'translateZ(10px)' }}>
+            {step.description}
+          </p>
+
+          {/* Bottom accent with animated width */}
+          <motion.div
+            initial={{ width: 0 }}
+            animate={isInView ? { width: '3rem' } : {}}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="h-[2px] bg-gradient-to-r from-gold/60 to-gold/20 mt-8"
+            style={{ transform: 'translateZ(5px)' }}
+          />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}

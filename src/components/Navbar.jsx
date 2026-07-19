@@ -4,194 +4,234 @@ import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+
+  const navLinks = [
+    { name: t('nav.overview'), href: '#about' },
+    { name: t('nav.stressDashboard'), href: '#science' },
+    { name: t('nav.ingredients'), href: '#ingredients' },
+    { name: t('nav.drugProfile'), href: '#benefits' },
+    { name: t('nav.faqs'), href: '#faq' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setScrolled(window.scrollY > 50);
+
+      // Detect active section
+      const sections = navLinks.map(link => link.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150) {
+            setActiveSection(sections[i]);
+            return;
+          }
+        }
       }
+      setActiveSection('');
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: t('nav.overview'), href: '#overview' },
-    { name: t('nav.ingredients'), href: '#ingredients' },
-    { name: t('nav.stressDashboard'), href: '#stress-dashboard' },
-    { name: t('nav.drugProfile'), href: '#drug-profile' },
-    { name: t('nav.faqs'), href: '#faq' },
-  ];
-
-  // Fix mobile navigation when links close menu immediately (vanished DOM reference bug)
-  const handleMobileLinkClick = (e, href) => {
+  const handleNavClick = (e, href) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
-    
-    // Delay slightly to let the menu collapse animation complete, then scroll smoothly
-    setTimeout(() => {
-      const targetElement = document.querySelector(href);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 200);
+    setMobileOpen(false);
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'en' ? 'ru' : 'en';
+    i18n.changeLanguage(nextLang);
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 py-3 shadow-md shadow-slate-100'
-          : 'bg-transparent py-5'
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+        scrolled
+          ? 'bg-midnight/85 backdrop-blur-2xl border-b border-gold/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
+          : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo / Brand */}
-          <div className="flex items-center space-x-2">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-sage to-sunset flex items-center justify-center shadow-md shadow-sage/10">
-              <span className="text-white font-bold text-lg">N</span>
-            </div>
-            <div>
-              <span className="text-xl font-bold tracking-wider font-display bg-gradient-to-r from-sage to-sunset bg-clip-text text-transparent">
-                NEUROLUME
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo with 3D hover */}
+          <motion.a
+            href="#"
+            className="flex items-center gap-3 group"
+            whileHover={{ scale: 1.02 }}
+            style={{ perspective: '600px' }}
+          >
+            <motion.div
+              className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-light flex items-center justify-center relative"
+              whileHover={{ rotateY: 180 }}
+              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+              style={{
+                transformStyle: 'preserve-3d',
+                boxShadow: '0 0 20px rgba(249,115,22,0.3), 0 4px 12px rgba(249,115,22,0.2)',
+              }}
+            >
+              <span
+                className="text-midnight font-bold text-lg font-serif"
+                style={{ backfaceVisibility: 'hidden' }}
+              >
+                N
               </span>
-              <span className="block text-[9px] uppercase tracking-widest text-sunset font-semibold -mt-1">
-                {t('hero.premiumTag')}
+              <span
+                className="text-midnight font-bold text-lg font-serif absolute inset-0 flex items-center justify-center"
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              >
+                ✦
               </span>
-            </div>
-          </div>
+            </motion.div>
+            <span className="text-xl font-serif font-bold tracking-wider text-white group-hover:text-gold-light transition-colors duration-300">
+              NEUROLUME
+            </span>
+          </motion.a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.name}
                 href={link.href}
-                className="text-slate-700 hover:text-sage text-sm font-semibold transition-colors duration-300"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`relative px-4 py-2 text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 ${
+                  activeSection === link.href.slice(1)
+                    ? 'text-gold-light'
+                    : 'text-gray-light hover:text-white'
+                }`}
               >
                 {link.name}
+                {activeSection === link.href.slice(1) && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-gold rounded-full"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    style={{
+                      boxShadow: '0 0 8px rgba(249,115,22,0.4)',
+                    }}
+                  />
+                )}
               </a>
             ))}
           </div>
 
-          {/* Language Switcher & Call to Action Button */}
-          <div className="hidden md:flex items-center space-x-6">
-            {/* EN/RU Switcher */}
-            <div className="flex items-center bg-slate-100 border border-slate-200 rounded-xl p-0.5">
+          {/* CTA Button & Language Switcher */}
+          <div className="hidden md:flex items-center gap-6">
+            
+            {/* Custom Language Toggle with glass effect */}
+            <div className="flex items-center bg-midnight/30 border border-gold/15 rounded-full p-1 backdrop-blur-xl">
               <button
                 onClick={() => i18n.changeLanguage('en')}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest transition-all duration-300 ${
                   i18n.language === 'en' || !i18n.language?.startsWith('ru')
-                    ? 'bg-sage text-white shadow-md'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'bg-gradient-to-r from-gold to-gold-light text-midnight shadow-[0_0_15px_rgba(249,115,22,0.3)]'
+                    : 'text-gray hover:text-white'
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => i18n.changeLanguage('ru')}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest transition-all duration-300 ${
                   i18n.language?.startsWith('ru')
-                    ? 'bg-sage text-white shadow-md'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'bg-gradient-to-r from-gold to-gold-light text-midnight shadow-[0_0_15px_rgba(249,115,22,0.3)]'
+                    : 'text-gray hover:text-white'
                 }`}
               >
                 RU
               </button>
             </div>
 
-            <a
-              href="#drug-profile"
-              className="px-5 py-2.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-white font-bold text-sm shadow-md shadow-sage/10 transform hover:-translate-y-0.5 transition-all duration-300"
-            >
-              {t('nav.dosageButton')}
-            </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-slate-700 hover:text-sage p-2 transition-colors focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              <svg className="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            aria-label="Toggle menu"
+          >
+            <motion.span
+              animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              className="w-6 h-[2px] bg-gold-light block"
+            />
+            <motion.span
+              animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="w-6 h-[2px] bg-gold-light block"
+            />
+            <motion.span
+              animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              className="w-6 h-[2px] bg-gold-light block"
+            />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/95 border-b border-slate-200 backdrop-blur-lg overflow-hidden"
+            className="md:hidden bg-midnight/95 backdrop-blur-2xl border-t border-gold/10 overflow-hidden"
           >
-            <div className="px-4 pt-2 pb-6 space-y-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
+            <div className="px-6 py-6 flex flex-col gap-4">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.name}
                   href={link.href}
-                  onClick={(e) => handleMobileLinkClick(e, link.href)}
-                  className="block text-slate-700 hover:text-sage text-base font-semibold py-2 border-b border-slate-100 transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="text-gray-light hover:text-gold-light text-sm tracking-[0.15em] uppercase transition-colors duration-300 py-2 border-b border-white/5"
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
-              
-              {/* Mobile Language Switcher */}
-              <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500 text-sm font-semibold">Language / Язык</span>
-                <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-0.5">
+              {/* Mobile Lang Switcher & CTA */}
+              <div className="flex flex-col gap-6 mt-4">
+                <div className="flex items-center justify-center gap-4 border border-gold/10 p-2 rounded-full mx-auto w-max backdrop-blur-xl">
                   <button
-                    onClick={() => { i18n.changeLanguage('en'); setIsMobileMenuOpen(false); }}
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                    onClick={() => { i18n.changeLanguage('en'); setMobileOpen(false); }}
+                    className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${
                       i18n.language === 'en' || !i18n.language?.startsWith('ru')
-                        ? 'bg-sage text-white'
-                        : 'text-slate-500 hover:text-slate-900'
+                        ? 'bg-gold/20 text-gold-light border border-gold/30'
+                        : 'text-gray hover:text-white border border-transparent'
                     }`}
                   >
-                    EN
+                    ENGLISH
                   </button>
                   <button
-                    onClick={() => { i18n.changeLanguage('ru'); setIsMobileMenuOpen(false); }}
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                    onClick={() => { i18n.changeLanguage('ru'); setMobileOpen(false); }}
+                    className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${
                       i18n.language?.startsWith('ru')
-                        ? 'bg-sage text-white'
-                        : 'text-slate-500 hover:text-slate-900'
+                        ? 'bg-gold/20 text-gold-light border border-gold/30'
+                        : 'text-gray hover:text-white border border-transparent'
                     }`}
                   >
-                    RU
+                    РУССКИЙ
                   </button>
                 </div>
-              </div>
 
-              <a
-                href="#drug-profile"
-                onClick={(e) => handleMobileLinkClick(e, '#drug-profile')}
-                className="block text-center mt-4 px-5 py-3 rounded-full bg-gradient-to-r from-sage to-sage-light text-white font-bold text-sm shadow-md"
-              >
-                {t('nav.dosageButton')}
-              </a>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }

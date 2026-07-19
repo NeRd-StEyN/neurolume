@@ -1,221 +1,261 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+
+function IngredientCard({ ingredient, index, isInView }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 60, rotateX: -15 }}
+      animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+      transition={{ duration: 0.7, delay: 0.1 + index * 0.08, ease: [0.23, 1, 0.32, 1] }}
+      className="cursor-pointer h-[300px]"
+      style={{ perspective: '1200px' }}
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <motion.div
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+        className="relative w-full h-full"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* Front Face */}
+        <div
+          className="absolute inset-0 overflow-hidden group border border-gold/10 hover:border-gold/30 transition-colors duration-500 rounded-[24px]"
+          style={{
+            backfaceVisibility: 'hidden',
+            background: 'rgba(248, 250, 252, 0.55)',
+            backdropFilter: 'blur(16px)',
+          }}
+        >
+          {ingredient.icon && (
+            <img
+              src={ingredient.icon}
+              alt={ingredient.name}
+              className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 group-hover:scale-110 group-hover:opacity-60 transition-all duration-700 z-0"
+            />
+          )}
+
+          <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff]/90 via-[#ffffff]/40 to-transparent z-[1] opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Animated shimmer on hover */}
+          <div className="absolute inset-0 z-[2] opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            <div className="absolute inset-0 animate-shimmer" />
+          </div>
+
+          <div className="relative z-10 h-full p-6 flex flex-col items-center justify-start text-center pt-8">
+            {/* Decorative line with glow */}
+            <motion.div
+              className="w-8 h-[2px] bg-gold/60 mb-4"
+              animate={isInView ? { width: [0, 32] } : {}}
+              transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+            />
+
+            {/* Name */}
+            <h3 className="font-serif text-2xl font-bold text-white mb-2 drop-shadow-md">
+              {ingredient.name}
+            </h3>
+
+            {/* Dose */}
+            <p className="text-gold font-bold text-sm tracking-wider uppercase drop-shadow-sm bg-[#ffffff]/50 px-3 py-1 rounded-full backdrop-blur-md border border-gold/20">
+              {ingredient.dose}
+            </p>
+
+            {/* Expand hint with 3D depth */}
+            <motion.div
+              className="mt-auto text-navy/40 text-3xl group-hover:text-gold transition-colors pb-2"
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              +
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Back Face with 3D depth layers */}
+        <div
+          className="absolute inset-0 rounded-[24px] p-6 flex flex-col justify-center border border-gold/20 overflow-hidden"
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            background: `linear-gradient(135deg, var(--color-deep-navy) 0%, ${ingredient.color}15 50%, var(--color-deep-navy) 100%)`,
+          }}
+        >
+          {/* Depth glow orb */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full blur-[60px] opacity-30"
+            style={{ background: ingredient.color }}
+          />
+
+          {/* Content */}
+          <div className="relative z-10">
+            {/* Latin Name */}
+            <p className="text-gold/70 text-xs tracking-wider uppercase mb-2 italic">
+              {ingredient.latin}
+            </p>
+
+            {/* Name + Dose */}
+            <h3 className="font-serif text-lg font-bold text-white mb-1">
+              {ingredient.name}
+            </h3>
+            <p className="text-gold text-xs font-medium tracking-wider mb-4">
+              {ingredient.dose}
+            </p>
+
+            {/* Description */}
+            <p className="text-gray-light text-sm leading-relaxed">
+              {ingredient.description}
+            </p>
+
+            {/* Decorative bottom border */}
+            <div className="w-12 h-[1px] bg-gradient-to-r from-gold/50 to-transparent mt-5" />
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Ingredients() {
   const { t } = useTranslation();
-  const [activeIngredient, setActiveIngredient] = useState(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
-  const ingredientsList = [
+  const ingredients = [
     {
-      id: 'shankhpushpi',
       name: t('ingredients.items.shankhpushpi.name'),
-      scientificName: t('ingredients.items.shankhpushpi.scientificName'),
-      dose: t('ingredients.items.shankhpushpi.dose'),
-      percentage: t('ingredients.items.shankhpushpi.percentage'),
-      benefits: t('ingredients.items.shankhpushpi.benefits', { returnObjects: true }) || [],
+      latin: 'Convolvulus pluricaulis',
+      dose: '112.5 mg',
+      color: '#2d8a5e',
       description: t('ingredients.items.shankhpushpi.description'),
-      color: 'from-emerald-500/20 to-teal-500/20',
-      borderColor: 'rgba(16, 185, 129, 0.3)'
     },
     {
-      id: 'ashwagandha',
       name: t('ingredients.items.ashwagandha.name'),
-      scientificName: t('ingredients.items.ashwagandha.scientificName'),
-      dose: t('ingredients.items.ashwagandha.dose'),
-      percentage: t('ingredients.items.ashwagandha.percentage'),
-      benefits: t('ingredients.items.ashwagandha.benefits', { returnObjects: true }) || [],
+      latin: 'Withania somnifera',
+      dose: '50 mg',
+      color: '#3ba876',
       description: t('ingredients.items.ashwagandha.description'),
-      color: 'from-green-500/20 to-emerald-500/20',
-      borderColor: 'rgba(52, 211, 153, 0.3)'
     },
     {
-      id: 'tagar',
       name: t('ingredients.items.tagar.name'),
-      scientificName: t('ingredients.items.tagar.scientificName'),
-      dose: t('ingredients.items.tagar.dose'),
-      percentage: t('ingredients.items.tagar.percentage'),
-      benefits: t('ingredients.items.tagar.benefits', { returnObjects: true }) || [],
+      latin: 'Valeriana wallichii',
+      dose: '25 mg',
+      color: '#27ae60',
       description: t('ingredients.items.tagar.description'),
-      color: 'from-teal-500/20 to-sage/20',
-      borderColor: 'rgba(20, 184, 166, 0.3)'
     },
     {
-      id: 'jayphal',
       name: t('ingredients.items.jayphal.name'),
-      scientificName: t('ingredients.items.jayphal.scientificName'),
-      dose: t('ingredients.items.jayphal.dose'),
-      percentage: t('ingredients.items.jayphal.percentage'),
-      benefits: t('ingredients.items.jayphal.benefits', { returnObjects: true }) || [],
+      latin: 'Myristica fragrans',
+      dose: '12.50 mg',
+      color: '#8B7355',
       description: t('ingredients.items.jayphal.description'),
-      color: 'from-amber-600/20 to-sunset/20',
-      borderColor: 'rgba(245, 158, 11, 0.3)'
     },
     {
-      id: 'basant',
       name: t('ingredients.items.basant.name'),
-      scientificName: t('ingredients.items.basant.scientificName'),
-      dose: t('ingredients.items.basant.dose'),
-      percentage: t('ingredients.items.basant.percentage'),
-      benefits: t('ingredients.items.basant.benefits', { returnObjects: true }) || [],
+      latin: 'Hypericum perforatum',
+      dose: '12.50 mg',
+      color: '#708090',
       description: t('ingredients.items.basant.description'),
-      color: 'from-sunset/20 to-amber-500/20',
-      borderColor: 'rgba(251, 191, 36, 0.3)'
-    }
+    },
   ];
 
   return (
-    <section id="ingredients" className="py-24 relative overflow-hidden bg-forest-dark">
-      {/* Background ambient glow */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-glow-sage opacity-40 filter blur-[90px]" />
-        <div className="absolute bottom-[20%] left-[10%] w-[450px] h-[450px] bg-glow-amber opacity-35 filter blur-[80px]" />
-      </div>
+    <section id="ingredients" className="relative py-40 lg:py-48 overflow-hidden" ref={ref}>
+      {/* Background */}
+      <div className="absolute top-0 left-0 right-0 section-divider" />
+      <motion.div
+        animate={{ scale: [1, 1.2, 1], opacity: [0.02, 0.04, 0.02] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald/3 rounded-full blur-[200px]"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-xs uppercase tracking-widest font-bold text-sunset font-display">
-            {t('ingredients.sectionTag')}
-          </span>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
-            {t('ingredients.title')}
-          </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-sage to-sunset mx-auto rounded-full" />
-          <p className="text-slate-600 text-base">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-24 lg:mb-28">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+            <span className="text-gold text-xs tracking-[0.3em] uppercase">{t('ingredients.sectionTag')}</span>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 32 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-[1px] bg-gold/50"
+            />
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold mb-8"
+          >
+            <span className="text-white">{t('ingredients.title')}</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-gray-light text-lg max-w-2xl mx-auto leading-relaxed"
+          >
             {t('ingredients.subtitle')}
-          </p>
+          </motion.p>
         </div>
 
-        {/* Ingredients Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {ingredientsList.map((item) => (
-            <motion.div
-              key={item.id}
-              layoutId={`card-${item.id}`}
-              onClick={() => setActiveIngredient(item)}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="wellness-card p-6 cursor-pointer border border-sage/10 hover:border-sunset/35 flex flex-col justify-between h-full group"
-            >
-              <div>
-                <div className="flex justify-end items-start mb-4">
-                  <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-display">
-                    {item.dose}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-xl font-semibold text-slate-900 group-hover:text-sunset transition-colors duration-300 leading-tight">
-                  {item.name}
-                </h3>
-                <p className="text-xs italic text-sage/80 mt-1 font-sans">
-                  {item.scientificName}
-                </p>
-              </div>
-
-              <div className="mt-8 text-xs font-semibold text-sage flex items-center space-x-1 group-hover:text-sunset transition-colors duration-300">
-                <span>{t('ingredients.viewChemistry')}</span>
-                <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
-              </div>
-            </motion.div>
+        {/* Ingredients Grid - 3D Flip Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {ingredients.map((ingredient, index) => (
+            <IngredientCard
+              key={ingredient.name}
+              ingredient={ingredient}
+              index={index}
+              isInView={isInView}
+            />
           ))}
         </div>
 
-        {/* Excipients notice */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-slate-500">
-            {t('ingredients.caption')}
-          </p>
-        </div>
-
-        {/* Interactive Detailed Modal */}
-        <AnimatePresence>
-          {activeIngredient && (
-            <>
-              {/* Overlay Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setActiveIngredient(null)}
-                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              >
-                {/* Modal Container */}
-                <motion.div
-                  layoutId={`card-${activeIngredient.id}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden relative"
-                >
-                  <div className={`h-3 bg-gradient-to-r ${activeIngredient.color}`} />
-                  
-                  {/* Close button */}
-                  <button
-                    onClick={() => setActiveIngredient(null)}
-                    className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors cursor-pointer"
-                  >
-                    ✕
-                  </button>
-
-                  <div className="p-8">
-                    <div className="mb-4">
-                      <div>
-                        <h3 className="font-serif text-2xl font-bold text-slate-900">
-                          {activeIngredient.name}
-                        </h3>
-                        <p className="text-sm italic text-sage font-sans">
-                          {activeIngredient.scientificName}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-3 mb-6">
-                      <div className="px-3 py-1 rounded bg-sage/10 border border-sage/20 text-sage font-bold text-xs uppercase tracking-widest font-display">
-                        {t('ingredients.dose')}: {activeIngredient.dose}
-                      </div>
-                      <div className="px-3 py-1 rounded bg-sunset/10 border border-sunset/20 text-sunset text-xs font-bold font-display">
-                        {t('ingredients.ratio')}: {activeIngredient.percentage}
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-2 font-display">
-                          {t('ingredients.bioAction')}
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {activeIngredient.benefits.map((benefit, idx) => (
-                            <span
-                              key={idx}
-                              className="px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold"
-                            >
-                              {benefit}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="pt-2">
-                        <h4 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-2 font-display">
-                          {t('ingredients.pharmDescription')}
-                        </h4>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                          {activeIngredient.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 pt-6 border-t border-slate-200 flex justify-end">
-                      <button
-                        onClick={() => setActiveIngredient(null)}
-                        className="px-6 py-2.5 rounded-full bg-gradient-to-r from-sage to-sage-light hover:from-sunset hover:to-sunset-light text-white font-bold text-sm shadow-md cursor-pointer transition-all duration-300"
-                      >
-                        {t('ingredients.closePortal')}
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+        {/* Total Formula Bar with 3D glass effect */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="mt-20 lg:mt-24 glass-card-3d p-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <div className="flex items-center gap-3">
+            <motion.div
+              className="w-3 h-3 rounded-full bg-gold"
+              animate={{
+                boxShadow: [
+                  '0 0 5px rgba(249,115,22,0.3), 0 0 10px rgba(249,115,22,0.1)',
+                  '0 0 15px rgba(249,115,22,0.5), 0 0 30px rgba(249,115,22,0.2)',
+                  '0 0 5px rgba(249,115,22,0.3), 0 0 10px rgba(249,115,22,0.1)',
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <span className="text-gray-light text-sm tracking-wider">Total Active Extracts</span>
+          </div>
+          <motion.div
+            className="font-serif text-2xl font-bold gold-text text-center sm:text-right"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            212.5 mg + Excipients q.s.
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
