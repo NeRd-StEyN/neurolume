@@ -289,10 +289,10 @@ export default function Hero() {
               {/* Product Box Image */}
               <motion.img
                 src="/neurolume-3d-box.png"
-                alt="Neurolume - Stress Relief"
-                className="w-[420px] max-w-full rounded-lg"
+                alt="Neurolume - Stress Relief Box"
+                className="w-[300px] max-w-full rounded-lg absolute left-[-40px] z-10"
                 style={{
-                  transform: 'translateZ(50px)',
+                  transform: 'translateZ(40px)',
                   filter: 'drop-shadow(0 25px 60px rgba(249,115,22,0.2)) drop-shadow(0 10px 20px rgba(0,0,0,0.1))',
                 }}
                 animate={{
@@ -300,6 +300,24 @@ export default function Hero() {
                 }}
                 transition={{
                   duration: 5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 0.5,
+                }}
+              />
+              <motion.img
+                src="/neurolume_bottle.png"
+                alt="Neurolume - Stress Relief Bottle"
+                className="w-[280px] max-w-full rounded-2xl right-[-20px] top-[20px] relative z-20"
+                style={{
+                  transform: 'translateZ(70px)',
+                  filter: 'drop-shadow(0 25px 60px rgba(249,115,22,0.3)) drop-shadow(0 10px 20px rgba(0,0,0,0.2))',
+                }}
+                animate={{
+                  y: [0, -15, 0],
+                }}
+                transition={{
+                  duration: 5.5,
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}

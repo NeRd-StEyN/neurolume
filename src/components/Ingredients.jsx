@@ -130,6 +130,7 @@ export default function Ingredients() {
       latin: 'Convolvulus pluricaulis',
       dose: '112.5 mg',
       color: '#2d8a5e',
+      icon: '/shankhpushpi_herb.png',
       description: t('ingredients.items.shankhpushpi.description'),
     },
     {
@@ -137,6 +138,7 @@ export default function Ingredients() {
       latin: 'Withania somnifera',
       dose: '50 mg',
       color: '#3ba876',
+      icon: '/ashwagandha_herb.png',
       description: t('ingredients.items.ashwagandha.description'),
     },
     {
@@ -144,6 +146,7 @@ export default function Ingredients() {
       latin: 'Valeriana wallichii',
       dose: '25 mg',
       color: '#27ae60',
+      icon: '/tagar_herb.png',
       description: t('ingredients.items.tagar.description'),
     },
     {
@@ -151,6 +154,7 @@ export default function Ingredients() {
       latin: 'Myristica fragrans',
       dose: '12.50 mg',
       color: '#8B7355',
+      icon: '/jayphal_herb.png',
       description: t('ingredients.items.jayphal.description'),
     },
     {
@@ -158,6 +162,7 @@ export default function Ingredients() {
       latin: 'Hypericum perforatum',
       dose: '12.50 mg',
       color: '#708090',
+      icon: '/basant_herb.png',
       description: t('ingredients.items.basant.description'),
     },
   ];

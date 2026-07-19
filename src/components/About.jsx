@@ -181,6 +181,38 @@ export default function About() {
           ))}
         </div>
 
+        {/* Floating Product Image */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="relative mt-20 flex justify-center perspective-1000"
+        >
+          <motion.img
+            src="/neurolume_capsules.png"
+            alt="Neurolume Capsules"
+            className="w-[500px] max-w-full rounded-3xl object-cover glass-card p-4"
+            style={{
+              filter: 'drop-shadow(0 20px 40px rgba(249,115,22,0.15))',
+              transform: 'rotateX(10deg) rotateY(-5deg)',
+            }}
+            animate={{
+              y: [0, -10, 0],
+              rotateX: [10, 12, 10],
+              rotateY: [-5, -3, -5]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          {/* Subtle glow behind capsules */}
+          <div className="absolute inset-0 flex items-center justify-center -z-10">
+            <div className="w-[400px] h-[200px] bg-gold/10 blur-[80px] rounded-full" />
+          </div>
+        </motion.div>
+
         {/* Stats Bar with 3D depth */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
