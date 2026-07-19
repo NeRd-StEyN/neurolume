@@ -308,7 +308,7 @@ export default function Hero() {
               <motion.img
                 src="/neurolume_bottle.png"
                 alt="Neurolume - Stress Relief Bottle"
-                className="w-[280px] max-w-full rounded-2xl right-[-20px] top-[20px] relative z-20"
+                className="w-[280px] max-w-full rounded-2xl right-[-20px] top-[20px] relative z-20 mix-blend-multiply"
                 style={{
                   transform: 'translateZ(70px)',
                   filter: 'drop-shadow(0 25px 60px rgba(249,115,22,0.3)) drop-shadow(0 10px 20px rgba(0,0,0,0.2))',
